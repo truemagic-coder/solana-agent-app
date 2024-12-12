@@ -9,7 +9,7 @@
 * Provides conversational memory, parallel function calling, smart automatic tool choice, and message history using MongoDB
 * Utilizes FastAPI and Next.js - the most popular and supported web frameworks 
 * Quickly add custom functions to your AI agent in a few lines of code
-* Solana Swiss Army Knife: wallets from Lit, Jupiter swaps, NFT minting via Crossmint, and SOL & SPL transfers via Helius (coming soon...)
+* Solana Swiss Army Knife: wallets from Lit protocol, Jupiter swaps, NFT minting via Crossmint, and SOL & SPL transfers via Helius (coming soon...)
 * Social Integrations: X and Telegram (coming soon...)
 
 ### Better than Eliza
@@ -17,7 +17,12 @@
 * Solana Agent's conversational history is superior to RAG for user interactivity, tool usage, and agent memory/recall/context
 * Solana Agent's parallel tool calling and automatic AI tool choice is superior than using any LLM completion API with tool usage from any provider
 * Solana Agent is an opinionated framework with one way to do things to keep things simple
-* Solana Agent is written in Python the most popular language on GitHub and in the AI field - not TypeScript
+* Solana Agent is written in Python the most popular language on GitHub and in the AI field
+
+### Caveats
+* The Solana Swiss Army Knife features are in TypeScript in Next.js and exposed as private APIs to Solana Agent as 3rd parties seem to not have Python SDKs
+* The Solana Agent team will endeavour in the future to have all 3rd party SDKs ported to Python
+
 
 ## Local Dev
 
