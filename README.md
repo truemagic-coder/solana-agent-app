@@ -9,7 +9,7 @@
 * Provides conversational memory, parallel function calling, smart automatic tool choice, and message history using MongoDB
 * Utilizes FastAPI and Next.js - the most popular and supported web frameworks 
 * Quickly add custom functions to your AI agent in a few lines of code
-* Solana Swiss Army Knife: wallet creation, Jupiter swaps, NFT minting via Crossmint, and SOL & SPL transfers via Helius (coming soon...)
+* Solana Swiss Army Knife: wallets from Lit, Jupiter swaps, NFT minting via Crossmint, and SOL & SPL transfers via Helius (coming soon...)
 * Social Integrations: X and Telegram (coming soon...)
 
 ### Better than Eliza
