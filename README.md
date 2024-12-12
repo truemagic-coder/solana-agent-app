@@ -16,6 +16,8 @@
 * Solana Agent requires no-code changes, only adding simple environment variables, and a MongoDB to work out of the box for a complete AI Agent with real-time chat
 * Solana Agent's conversational history is superior to RAG for user interactivity, tool usage, and agent memory/recall/context
 * Solana Agent's parallel tool calling and automatic AI tool choice is superior than using any LLM completion API with tool usage from any provider
+* Solana Agent is an opinionated framework with one way to do things to keep things simple
+* Solana Agent is written in Python the most popular language on GitHub and in the AI field - not TypeScript
 
 ## Local Dev
 
