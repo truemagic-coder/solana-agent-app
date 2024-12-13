@@ -2,15 +2,15 @@
 
 [![Solana Swarm](https://cdn.cometheart.com/solana-agent-logo.jpg)](https://solana-agent.com)
 
-##  Why Solana Agent
+## Why Solana Agent
 
 ### Batteries Included
 * Based on CyberChipped - a Python OpenAI Assistant Framework
 * Provides conversational memory, parallel function calling, smart automatic tool choice, and message history using MongoDB
 * Utilizes FastAPI and Next.js - the most popular and supported web frameworks 
 * Quickly add custom functions to your AI agent in a few lines of code
-* Solana Swiss Army Knife: wallets from Lit protocol, Jupiter swaps, and SOL & SPL transfers via Helius (coming before hackathon...)
-* Social Integrations: X and Telegram (coming after hackathon...)
+* Solana Actions: Jupiter swaps and SOL/SPL transfers (coming soon...)
+* Social Integrations: X (coming soon...)
 
 ### Better than Eliza
 * Solana Agent requires no-code changes, only adding simple environment variables, and a MongoDB to work out of the box for a complete AI Agent with real-time chat
@@ -18,11 +18,6 @@
 * Solana Agent's parallel tool calling and automatic AI tool choice is superior than using any LLM completion API with tool usage from any provider
 * Solana Agent is an opinionated framework with one way to do things to keep things simple
 * Solana Agent is written in Python the most popular language on GitHub and in the AI field
-
-### Caveats
-* The Solana Swiss Army Knife features are in TypeScript in Next.js and exposed as private APIs to Solana Agent as 3rd parties seem to not have Python SDKs
-* The Solana Agent team will endeavour in the future to have all 3rd party SDKs ported to Python
-
 
 ## Local Dev
 
@@ -34,6 +29,8 @@
 * Rename `.env.sample` to `.env` in `site`
 * Rename `.env.sample` to `.env` in `agent`
 * Get and set the OPENAI_API_KEY var in the `agent` folder for `.env` file - [OpenAI API Keys](https://platform.openai.com/api-keys)
+* Get and set the HELIUS_API_KEY and HELIUS_RPC_URL in both folders `.env` files - [Helius](https://helius.dev)
+* Set all the secrets to match between the `.env` files and make them `uuidv4`s or other strong keys
 * Open two terminal windows
 * `Terminal 1`: `cd site && yarn install && yarn dev`
 * `Terminal 2`: `cd agent && poetry install && bash ./dev.sh`
