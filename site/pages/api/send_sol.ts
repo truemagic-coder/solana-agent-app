@@ -17,7 +17,7 @@ async function post(req: NextApiRequest, res: NextApiResponse) {
     if (secretKey !== process.env.NEXTAUTH_SECRET as string) {
       return res.status(401).send({ success: false });
     }
-    const walletAddress = req.body?.to_address as string;
+    const walletAddress = req.body?.address as string;
     const rawAmount = req.body?.amount as number;
     const amount = new BigNumber(rawAmount);
 

@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 import uuid
 from fastapi import FastAPI, HTTPException, Header, Request, Depends
 from fastapi.middleware.cors import CORSMiddleware
@@ -5,13 +6,19 @@ import logging
 import asyncio
 import httpx
 from pydantic import BaseModel
-from pymongo import MongoClient
+from pymongo import MongoClient, UpdateOne
 import pymongo
 from sse_starlette.sse import EventSourceResponse
 from datetime import datetime as dt
 from solana_agent.config import config
 from solana_agent.services.chat_service import chat_service
+import taskiq_fastapi
+from taskiq_redis import ListQueueBroker
+from taskiq import SimpleRetryMiddleware, TaskiqScheduler
+from taskiq.schedule_sources import LabelScheduleSource
 import jwt
+from .services.solana_actions import SolanaActions
+
 
 # Initialize logging
 logging.basicConfig(level=logging.INFO)
@@ -21,12 +28,45 @@ logger = logging.getLogger(__name__)
 client = MongoClient(config.MONGO_URL)
 db = client[config.MONGO_DB]
 
+broker = ListQueueBroker(config.REDIS_URL).with_middlewares(
+    SimpleRetryMiddleware(default_retry_count=3),
+)
+
+schedule_source = LabelScheduleSource(broker)
+scheduler = TaskiqScheduler(broker=broker, sources=[schedule_source])
+
+solana_actions = SolanaActions()
+
+
+@broker.task(
+    retry_on_error=False,
+    timeout=60,
+    schedule=[{"cron": "*/25 * * * *"}],
+)
+def fetch_and_store_tokens():
+    solana_actions.fetch_and_store_tokens()
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    try:
+        fetch_and_store_tokens()
+        if not broker.is_worker_process:
+            print("Starting broker & scheduler...")
+            await broker.startup()
+            await scheduler.startup()
+        yield
+    except Exception as e:
+        logger.error(f"Error during startup: {str(e)}")
+    finally:
+        client.close()
+
 
 class ChatRequest(BaseModel):
     text: str
 
 
-app = FastAPI()
+app = FastAPI(lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -37,6 +77,8 @@ app.add_middleware(
     allow_methods=["POST", "GET", "PUT", "DELETE"],
     allow_headers=["*"],
 )
+
+taskiq_fastapi.init(broker, "solana_agent.main:app")
 
 
 async def check_bearer_token(authorization: str = Header(...)):

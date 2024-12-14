@@ -17,6 +17,10 @@ cyberchipped = "2.1.10"
 sse-starlette = "2.1.3"
 pyjwt = "2.10.1"
 httpx = "0.28.1"
+taskiq = "0.11.10"
+taskiq-redis = "1.0.2"
+taskiq-fastapi = "0.3.3"
+requests = "2.32.3"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "*"

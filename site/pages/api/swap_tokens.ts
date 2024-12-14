@@ -67,8 +67,8 @@ async function post(req: NextApiRequest, res: NextApiResponse) {
 
     const inputMint = req.body?.input_mint as string;
     const outputMint = req.body?.output_mint as string;
-    const decimals = req.body?.input_decimals as number;
-    const rawAmount = req.body?.amount as number;
+    const decimals = req.body?.decimals as number;
+    const rawAmount = req.body?.amount as string;
     const amount = new BigNumber(rawAmount).multipliedBy(10 ** decimals).toNumber();
 
     const jupiterQuoteApi = createJupiterApiClient();

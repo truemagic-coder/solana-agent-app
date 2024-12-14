@@ -21,10 +21,10 @@ async function post(req: NextApiRequest, res: NextApiResponse) {
     if (secretKey !== process.env.NEXTAUTH_SECRET as string) {
       return res.status(401).send({ success: false });
     }
-    const walletAddress = req.body?.to_address as string;
-    const mintAddress = req.body?.input_mint as string;
-    const decimals = req.body?.input_decimals as number;
-    const rawAmount = req.body?.amount as number;
+    const walletAddress = req.body?.address as string;
+    const mintAddress = req.body?.mint as string;
+    const decimals = req.body?.decimals as number;
+    const rawAmount = req.body?.amount as string;
     const amount = new BigNumber(rawAmount).multipliedBy(10 ** decimals).toNumber();
 
     const helius = new Helius(process.env.HELIUS_API_KEY as string);

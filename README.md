@@ -9,7 +9,7 @@
 * Provides conversational memory, parallel function calling, smart automatic tool choice, and message history using MongoDB
 * Utilizes FastAPI and Next.js - the most popular and supported web frameworks 
 * Quickly add custom functions to your AI agent in a few lines of code
-* Solana Actions: Swaps via Jupiter, SOL/SPL transfers via Helius, and wallet creation via Lit (coming soon...)
+* Solana Actions: SOL/SPL transfers via Helius, Swaps via Jupiter, and wallet creation via Lit (coming soon...)
 * Social Integrations: X (coming soon...)
 
 ### Better than Eliza
@@ -25,7 +25,8 @@
 * Clone this repo - `git clone https://github.com/truemagic-coder/solana-agent`
 * Ensure the latest LTS Node is installed with yarn
 * Ensure Python 3.12.7 is installed with poetry
-* Provision a MongoDB database - docker is recommended
+* Ensure Docker and Docker Compose are installed
+* `docker-compose up -d`
 * Rename `.env.sample` to `.env` in `site`
 * Rename `.env.sample` to `.env` in `agent`
 * Get and set the OPENAI_API_KEY var in the `agent` folder for `.env` file - [OpenAI API Keys](https://platform.openai.com/api-keys)
@@ -39,7 +40,7 @@
 ## Deploy
 
 ### Deploy to Heroku or Dokku
-* Provision a MongoDB database
+* Provision a MongoDB and Redis database
 * Get one domains with two sub-domains - one for the `site` and one for the `agent`
 * Add the proper env vars on Heroku or Dokku to your apps
 * Add your proper remotes in each folder locally (each folder `site` and `agent` should be their own repos - `git init`)

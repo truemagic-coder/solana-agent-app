@@ -2,6 +2,7 @@ from cyberchipped import AI, MongoDatabase
 from solana_agent.config import config
 from typing import AsyncGenerator
 from pymongo import MongoClient
+from .solana_actions import SolanaActions
 
 client = MongoClient(config.MONGO_URL)
 db = client[config.MONGO_DB]
@@ -11,8 +12,9 @@ class ChatService:
     def __init__(self):
         self._database = None
         self._ai = None
+        self.solana_actions = SolanaActions()
         self._instructions = """
-            You are a Solana AI Agent.
+            You are a Solana AI Agent that can send SOL and SPL tokens.
         """
         self.user_id = None
 
@@ -33,11 +35,25 @@ class ChatService:
                 database=self.database,
             )
 
-            # add tools here!
-            # params must be strings and must return a string
             @ai.add_tool
-            def hello_world() -> str:
-                return "Hello, World!"
+            def send_sol_by_address(to_address: str, amount: str) -> str:
+                return self.solana_actions.send_sol_by_address(to_address, amount)
+
+            @ai.add_tool
+            def send_tokens_by_address(
+                to_address: str, amount: str, token_address: str
+            ) -> str:
+                return self.solana_actions.send_tokens_by_address(
+                    to_address, amount, token_address
+                )
+
+            @ai.add_tool
+            def send_tokens_by_symbol(
+                to_address: str, amount: str, token_symbol: str
+            ) -> str:
+                return self.solana_actions.send_tokens_by_symbol(
+                    to_address, amount, token_symbol
+                )
 
             self._ai = ai
         return self._ai
