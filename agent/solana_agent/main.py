@@ -3,6 +3,7 @@ from fastapi import FastAPI, HTTPException, Header, Request, Depends
 from fastapi.middleware.cors import CORSMiddleware
 import logging
 import asyncio
+import httpx
 from pydantic import BaseModel
 from pymongo import MongoClient
 import pymongo
@@ -56,6 +57,36 @@ async def check_bearer_token(authorization: str = Header(...)):
             detail="Unauthorized",
         )
     return jwt_fields
+
+
+@app.post("/rpc")
+async def handler_rpc_post(request: Request):
+    try:
+        data = await request.json()
+        async with httpx.AsyncClient() as client:
+            response = await client.request(
+                method=request.method,
+                url=config.HELIUS_RPC,  # Replace with the actual API URL
+                json=data,
+                headers={"Content-Type": "application/json"},
+            )
+        return response.json()
+    except Exception:
+        raise HTTPException(status_code=500, detail="Error fetching data")
+
+
+@app.get("/rpc")
+async def handler_rpc_get(request: Request):
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.request(
+                method=request.method,
+                url=config.HELIUS_RPC,  # Replace with the actual API URL
+                headers={"Content-Type": "application/json"},
+            )
+        return response.json()
+    except Exception:
+        raise HTTPException(status_code=500, detail="Error fetching data")
 
 
 @app.get("/history/{user_id}")

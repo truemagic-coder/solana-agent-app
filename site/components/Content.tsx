@@ -18,7 +18,6 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import remarkStringify from 'remark-stringify';
 import rehypeRaw from 'rehype-raw';
-import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import WalletMultiButtonDynamic from 'components/WalletAdapter';
 import { v4 } from 'uuid';
@@ -277,10 +276,9 @@ function External() {
       <div className="w-full mx-auto">
         <div id="overlay-button" />
         <div className="flex flex-col items-center mb-16 mt-5">
-          <Image
+          <img
             src="/logo.jpg"
-            width={300}
-            height={300}
+            width={100}
             alt="logo"
             className="mb-4 max-w-4xl mx-auto"
           />
@@ -295,7 +293,7 @@ function External() {
           <div className="w-full px-4 mb-4 py-4">
             <div
               ref={chatContainerRef}
-              className="w-full h-[calc(100vh-500px)] bg-gray-800 p-4 rounded-lg mb-4 overflow-y-auto"
+              className="w-full min-h-[500px] max-h-[calc(100vh-500px)] bg-gray-800 p-4 rounded-lg mb-4 overflow-y-auto"
             >
               <InfiniteScroll
                 loadMore={loadMoreData}

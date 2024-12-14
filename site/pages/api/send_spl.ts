@@ -21,10 +21,11 @@ async function post(req: NextApiRequest, res: NextApiResponse) {
     if (secretKey !== process.env.NEXTAUTH_SECRET as string) {
       return res.status(401).send({ success: false });
     }
-    const walletAddress = req.body?.data.publicKey as string;
-    const mintAddress = req.body?.data.mintAddress as string;
-    const rawAmount = req.body?.data.amount as number;
-    const amount = new BigNumber(rawAmount);
+    const walletAddress = req.body?.to_address as string;
+    const mintAddress = req.body?.input_mint as string;
+    const decimals = req.body?.input_decimals as number;
+    const rawAmount = req.body?.amount as number;
+    const amount = new BigNumber(rawAmount).multipliedBy(10 ** decimals).toNumber();
 
     const helius = new Helius(process.env.HELIUS_API_KEY as string);
     const connection = new Connection(process.env.HELIUS_RPC_URL as string);
@@ -71,7 +72,7 @@ async function post(req: NextApiRequest, res: NextApiResponse) {
         senderATA,
         recipientATA,
         feePayerPublicKey,
-        amount.toNumber(),
+        amount,
         [],
         TOKEN_PROGRAM_ID,
       ),
@@ -81,6 +82,7 @@ async function post(req: NextApiRequest, res: NextApiResponse) {
     await helius.rpc.sendSmartTransaction(instructions, [feePayerKeypair]);
     return res.status(200).send({ success: true });
   } catch (error) {
+    console.error(error);
     return res.status(500).send({ success: false });
   }
 }

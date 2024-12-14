@@ -9,7 +9,7 @@
 * Provides conversational memory, parallel function calling, smart automatic tool choice, and message history using MongoDB
 * Utilizes FastAPI and Next.js - the most popular and supported web frameworks 
 * Quickly add custom functions to your AI agent in a few lines of code
-* Solana Actions: Jupiter swaps and SOL/SPL transfers (coming soon...)
+* Solana Actions: Swaps via Jupiter, SOL/SPL transfers via Helius, and wallet creation via Lit (coming soon...)
 * Social Integrations: X (coming soon...)
 
 ### Better than Eliza
