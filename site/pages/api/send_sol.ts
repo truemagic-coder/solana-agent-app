@@ -18,7 +18,7 @@ async function post(req: NextApiRequest, res: NextApiResponse) {
       return res.status(401).send({ success: false });
     }
     const walletAddress = req.body?.address as string;
-    const rawAmount = req.body?.amount as number;
+    const rawAmount = req.body?.amount as string;
     const amount = new BigNumber(rawAmount);
 
     const helius = new Helius(process.env.HELIUS_API_KEY as string);

@@ -9,11 +9,15 @@
 * Provides conversational memory, parallel function calling, smart automatic tool choice, and message history using MongoDB
 * Utilizes FastAPI and Next.js - the most popular and supported web frameworks 
 * Quickly add custom functions to your AI agent in a few lines of code
-* Solana Actions: SOL/SPL transfers via Helius, Swaps via Jupiter, and wallet creation via Lit (coming soon...)
-* Social Integrations: X (coming soon...)
+* Solana Actions: 
+    * SOL/SPL transfers via Helius
+    * Swaps via Jupiter
+    * Wallet creation via Lit (coming soon...)
+* Social Integrations: 
+    * X (coming soon...)
 
 ### Better than Eliza
-* Solana Agent requires no-code changes, only adding simple environment variables, and a MongoDB to work out of the box for a complete AI Agent with real-time chat
+* Solana Agent requires no-code changes, only adding simple environment variables, and MongoDB/Redis to work out of the box for a complete AI Agent with real-time chat
 * Solana Agent's conversational history is superior to RAG for user interactivity, tool usage, and agent memory/recall/context
 * Solana Agent's parallel tool calling and automatic AI tool choice is superior than using any LLM completion API with tool usage from any provider
 * Solana Agent is an opinionated framework with one way to do things to keep things simple
