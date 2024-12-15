@@ -60,6 +60,9 @@
 * Keep in mind the 128k model token input limit when processing data especially from APIs
 * OpenAI `gpt-4o` is recommended over `gpt-4o-mini` simply for AI IQ but if cost is a concern then mini may work for your agent usage
 
+## Production Apps
+* [WB AI Agent](https://ai.walletbubbles.com)
+
 ## Contributing
 Contributions to Solana Agent are welcome! Please feel free to submit a Pull Request.
 
