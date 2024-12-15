@@ -51,67 +51,51 @@ class SolanaActions:
             ]
         }
         token = self._db.tokens.find_one(
-            query, {"_id": 0, "address": 1, "name": 1, "symbol": 1}
+            query, {"_id": 0, "address": 1, "name": 1, "symbol": 1, "decimals": 1}
         )
         return token
-    
-    def send_sol_by_address(self, address: str, amount: str) -> str:
-        try:
-            url = f"{config.NEXTAUTH_URL}/api/send_sol"
-            headers = {"Content-Type": "application/json"}
-            data = {
-                "address": address,
-                "amount": amount,
-            }
-            response = requests.post(url, headers=headers, json=data)
-            if response.status_code == 200:
-                return f"Sent {amount} SOL to {address}."
-            else:
-                return f"Failed to send SOL. Status code: {response.status_code}"
-        except Exception as e:
-            return f"Error sending SOL: {e}"
-        
-    def send_tokens_by_symbol(self, to_address: str, amount: str, token_symbol: str) -> str:
+
+    def send_tokens_by_symbol(self, address: str, amount: str, token_symbol: str) -> str:
         try:
             token_info = self.get_token_info(token_symbol)
             if not token_info:
                 return "Token not found."
             mint_address = token_info["address"]
             decimals = token_info["decimals"]
-            url = f"{config.NEXTAUTH_URL}/api/send_token"    
+            url = f"{config.NEXTAUTH_URL}/api/send_tokens"    
             headers = {"Content-Type": "application/json", "Authorization": config.NEXTAUTH_SECRET}
             data = {
-                "address": to_address,
+                "address": address,
                 "amount": amount,
                 "mint": mint_address,
                 "decimals": decimals,
             }
             response = requests.post(url, headers=headers, json=data)
             if response.status_code == 200:
-                return f"Sent {amount} tokens to {to_address}."
+                return f"Sent {amount} tokens to {address}."
             else:
                 return f"Failed to send tokens. Status code: {response.status_code}"
         except Exception as e:
             return f"Error sending tokens: {e}"
     
-    def send_tokens_by_address(self, to_address: str, amount: str, token_address: str) -> str:
+    def send_tokens_by_address(self, address: str, amount: str, token_address: str) -> str:
         try:
             token_info = self.get_token_info(token_address)
             if not token_info:
                 return "Token not found."
             mint_address = token_info["address"]
             decimals = token_info["decimals"]
-            url = f"{config.NEXTAUTH_URL}/api/send_token"    
+            url = f"{config.NEXTAUTH_URL}/api/send_tokens"    
             headers = {"Content-Type": "application/json", "Authorization": config.NEXTAUTH_SECRET}
             data = {
-                "address": to_address,
+                "address": address,
                 "amount": amount,
                 "mint": mint_address,
                 "decimals": decimals,
             }
             response = requests.post(url, headers=headers, json=data)
             if response.status_code == 200:
-                return f"Sent {amount} tokens to {to_address}."
+                return f"Sent {amount} tokens to {address}."
             else:
                 return f"Failed to send tokens. Status code: {response.status_code}"
         except Exception as e:

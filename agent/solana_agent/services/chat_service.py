@@ -29,15 +29,11 @@ class ChatService:
         if self._ai is None:
             ai = AI(
                 api_key=config.OPENAI_API_KEY,
-                name="Solana Agent",
+                name="Solana Agent v3",
                 model="gpt-4o",
                 instructions=self._instructions,
                 database=self.database,
             )
-
-            @ai.add_tool
-            def send_sol_by_address(to_address: str, amount: str) -> str:
-                return self.solana_actions.send_sol_by_address(to_address, amount)
 
             @ai.add_tool
             def send_tokens_by_address(
@@ -53,6 +49,14 @@ class ChatService:
             ) -> str:
                 return self.solana_actions.send_tokens_by_symbol(
                     to_address, amount, token_symbol
+                )
+            
+            @ai.add_tool
+            def swap_tokens(
+                from_symbol: str, to_symbol: str, amount: str
+            ) -> str:
+                return self.solana_actions.swap_tokens_by_symbols(
+                    from_symbol, to_symbol, amount
                 )
 
             self._ai = ai

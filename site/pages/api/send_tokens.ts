@@ -4,6 +4,7 @@ import {
   Connection,
   Keypair,
   PublicKey,
+  SystemProgram,
   TransactionInstruction,
 } from '@solana/web3.js';
 import {
@@ -35,6 +36,17 @@ async function post(req: NextApiRequest, res: NextApiResponse) {
     const feePayerPrivateKeyBytes = bs58.decode(feePayerPrivateKeyString);
     const feePayerKeypair = Keypair.fromSecretKey(feePayerPrivateKeyBytes);
     const feePayerPublicKey = feePayerKeypair.publicKey;
+
+    if (mintAddress === 'So11111111111111111111111111111111111111112') {
+      const ix = SystemProgram.transfer({
+        fromPubkey: feePayerPublicKey,
+        toPubkey: new PublicKey(walletAddress),
+        lamports: amount,
+      });
+
+      await helius.rpc.sendSmartTransaction([ix], [feePayerKeypair]);
+      return res.status(200).send({ success: true });
+    }
 
     const mint = new PublicKey(mintAddress);
     const recipient = new PublicKey(walletAddress);
