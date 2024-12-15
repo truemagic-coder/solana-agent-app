@@ -9,9 +9,9 @@
 * Provides conversational memory, parallel function calling, smart automatic tool choice, and message history using MongoDB
 * Utilizes FastAPI and Next.js - the most popular and supported web frameworks 
 * Quickly add custom functions to your AI agent in a few lines of code
-* Solana Actions: 
-    * SOL/SPL transfers via Helius
-    * Swaps via Jupiter
+* Solana Agent Actions: 
+    * Transfer tokens from the Agent wallet to other wallets - via Helius
+    * Swap tokens inside the Agent wallet - via Jupiter and Helius
 * Social Integrations: 
     * X (coming soon...)
 
