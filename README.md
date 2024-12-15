@@ -12,7 +12,6 @@
 * Solana Actions: 
     * SOL/SPL transfers via Helius
     * Swaps via Jupiter
-    * Wallet creation via Lit (coming soon...)
 * Social Integrations: 
     * X (coming soon...)
 
