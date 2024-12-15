@@ -16,8 +16,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <title>WB - Solana Degen</title>
-        <meta name="description" content="Your Solana Degen!" />
+        <title>Solana Agent</title>
+        <meta name="description" content="Your Solana Agent!" />
         <link rel="shortcut icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
         <meta httpEquiv="content-language" content="en" />
