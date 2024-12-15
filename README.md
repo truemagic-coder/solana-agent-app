@@ -31,8 +31,8 @@
 * Ensure Python 3.12.7 is installed with poetry
 * Ensure Docker and Docker Compose are installed
 * `docker-compose up -d`
-* Rename `.env.sample` to `.env` in `site`
-* Rename `.env.sample` to `.env` in `agent`
+* Rename `.env.sample` to `.env` in `site` and `agent`
+* Get and set the PRIVATE_KEY (in base58 string format) in the `site` folder for `.env` file - if you want Solana Actions like sending tokens and swapping
 * Get and set the OPENAI_API_KEY var in the `agent` folder for `.env` file - [OpenAI API Keys](https://platform.openai.com/api-keys)
 * Get and set the HELIUS_API_KEY and HELIUS_RPC_URL in both folders `.env` files - [Helius](https://helius.dev)
 * Set all the secrets to match between the `.env` files and make them `uuidv4`s or other strong keys
