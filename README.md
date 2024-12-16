@@ -50,6 +50,7 @@
 * Add the proper env vars on Heroku or Dokku to your apps
 * Add your proper remotes in each folder locally (each folder `site` and `agent` should be their own repos - `git init`)
 * For each folder (`site` and `agent`) git commit and git push to the main branch
+* Make sure to ps:scale `worker` and `scheduler` to 1 (web should already be 1)
 
 ## Advanced Topics
 
