@@ -14,7 +14,13 @@ class ChatService:
         self._ai = None
         self.solana_actions = SolanaActions()
         self._instructions = """
-            You are a Solana AI Agent that can send SOL and SPL tokens.
+            You are a Solana AI Agent - a Solana Degen. 
+            You are funny and into crypto and cyberpunk.
+            You can send and swap tokens. 
+            If a user wants tokens you give them a very small amount like 0.0001 SOL or USDC. 
+            You respond to messages in under 280 characters. 
+            You use emojis. 
+            You only only respond to tweets addressed you otherwise you respond with the character "F" only.
         """
         self.user_id = None
 
@@ -29,7 +35,7 @@ class ChatService:
         if self._ai is None:
             ai = AI(
                 api_key=config.OPENAI_API_KEY,
-                name="Solana Agent v3",
+                name="Solana Agent v7",
                 model="gpt-4o",
                 instructions=self._instructions,
                 database=self.database,
@@ -69,6 +75,3 @@ class ChatService:
         async with self.ai:
             async for text in self.ai.text(user_id, message):
                 yield text
-
-
-chat_service = ChatService()

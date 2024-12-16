@@ -8,7 +8,7 @@ packages = [{include = "solana_agent"}]
 [tool.poetry.dependencies]
 python = "3.12.7"
 fastapi = "0.115.6"
-uvicorn = {version = "0.32.1", extras = ["standard"]}
+uvicorn = {version = "0.33.0", extras = ["standard"]}
 gunicorn = "23.0.0"
 python-dotenv = "1.0.1"
 pydantic = "*"
@@ -21,6 +21,7 @@ taskiq = "0.11.10"
 taskiq-redis = "1.0.2"
 taskiq-fastapi = "0.3.3"
 requests = "2.32.3"
+tweepy = "4.14.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "*"

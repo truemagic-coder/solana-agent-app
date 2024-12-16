@@ -13,7 +13,7 @@
     * Transfer tokens from the Agent wallet to other wallets - via Helius
     * Swap tokens inside the Agent wallet - via Jupiter and Helius
 * Social Integrations: 
-    * X (coming soon...)
+    * X - requires the Basic Plan
 
 ### Better than Eliza
 * Solana Agent requires no-code changes, only adding simple environment variables, and MongoDB/Redis to work out of the box for a complete AI Agent with real-time chat
@@ -21,6 +21,9 @@
 * Solana Agent's parallel tool calling and automatic AI tool choice is superior than using any LLM completion API with tool usage from any provider
 * Solana Agent is an opinionated framework with one way to do things to keep things simple
 * Solana Agent is written in Python the most popular language on GitHub and in the AI field
+
+### Caveats
+* Due to rate-limiting on the X Basic plan - the bot only checks every 5 minutes and returns the latest 10 responses for reply
 
 ## Local Dev
 
@@ -34,6 +37,7 @@
 * Get and set the PRIVATE_KEY (in base58 string format) in the `site` folder for `.env` file - if you want Solana Actions like sending tokens and swapping
 * Get and set the OPENAI_API_KEY var in the `agent` folder for `.env` file - [OpenAI API Keys](https://platform.openai.com/api-keys)
 * Get and set the HELIUS_API_KEY and HELIUS_RPC_URL in both folders `.env` files - [Helius](https://helius.dev)
+* If you want XBot - then setup a X developer account and setup the keys in `agent` folder for `.env` file - and uncomment the code in `main.py`
 * Set all the secrets to match between the `.env` files and make them `uuidv4`s or other strong keys
 * Open two terminal windows
 * `Terminal 1`: `cd site && yarn install && yarn dev`
