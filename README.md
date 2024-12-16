@@ -24,7 +24,7 @@
 
 ### Caveats
 * Due to rate-limiting on the X Basic plan - the bot only checks every 5 minutes and returns the latest 5 responses for possible AI reply - the rest are ignored
-* If you want real-time streaming X mention timeline you need to subscribe to X Pro - currently the code only supports Basic - if you want Pro supported - contact me
+* If you want real-time X responses you need to subscribe to X Pro - currently the code only supports Basic - if you want Pro supported - contact me
 
 ## Local Dev
 
