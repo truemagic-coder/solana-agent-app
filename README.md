@@ -32,7 +32,7 @@
 * Ensure Docker and Docker Compose are installed
 * `docker-compose up -d`
 * Rename `.env.sample` to `.env` in `site` and `agent`
-* Get and set the PRIVATE_KEY (in base58 string format) in the `site` folder for `.env` file - if you want Solana Actions like sending tokens and swapping
+* Get and set the PRIVATE_KEY (in base58 string format) in the `site` folder for `.env` file - if you want Solana Actions like sending tokens and swapping with funds from this wallet
 * Get and set the OPENAI_API_KEY var in the `agent` folder for `.env` file - [OpenAI API Keys](https://platform.openai.com/api-keys)
 * Get and set the HELIUS_API_KEY and HELIUS_RPC_URL in both folders `.env` files - [Helius](https://helius.dev)
 * If you want XBot - then setup a X developer account and setup the keys in `agent` folder for `.env` file - and uncomment the code in `main.py`
