@@ -13,7 +13,7 @@
     * Transfer tokens from the Agent wallet to other wallets - via Helius
     * Swap tokens inside the Agent wallet - via Jupiter and Helius
 * Social Integrations: 
-    * X - requires the Basic Plan
+    * X - via the X API (Basic Plan)
 
 ### Better than Eliza
 * Solana Agent requires no-code changes, only adding simple environment variables, and MongoDB/Redis to work out of the box for a complete AI Agent with real-time chat
@@ -21,10 +21,7 @@
 * Solana Agent's parallel tool calling and automatic AI tool choice is superior than using any LLM completion API with tool usage from any provider
 * Solana Agent is an opinionated framework with one way to do things to keep things simple
 * Solana Agent is written in Python the most popular language on GitHub and in the AI field
-
-### Caveats
-* Due to rate-limiting on the X Basic plan - the bot only checks every 5 minutes and returns the latest 5 responses for possible AI reply - the rest are ignored
-* If you want real-time X responses you need to subscribe to X Pro - currently the code only supports Basic - if you want Pro supported - contact me
+* Solana Agent replies on X in real-time and only replies when it should
 
 ## Local Dev
 

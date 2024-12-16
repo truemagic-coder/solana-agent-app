@@ -140,7 +140,7 @@ class XBot:
             print(f"Error checking mentions: {e}")
             traceback.print_exc()
 
-    async def run(self, interval=300):  # Check every 5 minutes
+    async def run(self, interval=10):  # Check every 10 seconds
         while True:
             await self.check_mentions()
             await asyncio.sleep(interval)
