@@ -115,7 +115,7 @@ class XBot:
 
             kwargs = {
                 "id": self.me.id,
-                "max_results": 10,
+                "max_results": 5,
                 "expansions": "author_id,referenced_tweets.id",
                 "tweet_fields": "author_id,id,text",
                 "user_fields": "id,username",
@@ -124,7 +124,7 @@ class XBot:
                 kwargs["since_id"] = rate_limits["last_mention_id"]
 
             response = self.client.get_users_mentions(**kwargs)
-            await self.update_rate_limits(read_count=1)
+            await self.update_rate_limits(read_count=5)
 
             if response.data:
                 for tweet in reversed(response.data):

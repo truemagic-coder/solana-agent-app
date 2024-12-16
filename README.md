@@ -23,7 +23,8 @@
 * Solana Agent is written in Python the most popular language on GitHub and in the AI field
 
 ### Caveats
-* Due to rate-limiting on the X Basic plan - the bot only checks every 5 minutes and returns the latest 10 responses for reply
+* Due to rate-limiting on the X Basic plan - the bot only checks every 5 minutes and returns the latest 5 responses for possible AI reply - the rest are ignored
+* If you want real-time streaming X mention timeline you need to subscribe to X Pro - currently the code only supports Basic - if you want Pro supported - contact me
 
 ## Local Dev
 
