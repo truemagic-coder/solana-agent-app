@@ -64,6 +64,7 @@
 
 ## Production Apps
 * [WB AI Agent](https://ai.walletbubbles.com)
+* [Solana Agent X Bot](https://solana-agent.com)
 
 ## Contributing
 Contributions to Solana Agent are welcome! Please feel free to submit a Pull Request.
