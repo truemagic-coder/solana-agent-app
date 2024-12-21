@@ -66,13 +66,14 @@ def fetch_and_store_tokens():
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     try:
-        ### Uncomment the following line to enable Twitter API
-        # asyncio.create_task(x_bot.run())
-        ###
-
-        fetch_and_store_tokens()
-
         if not broker.is_worker_process:
+        
+            ### Uncomment the following line to enable Twitter API
+            # asyncio.create_task(x_bot.run())
+            ###
+
+            fetch_and_store_tokens()
+
             print("Starting broker & scheduler...")
             await broker.startup()
             await scheduler.startup()
