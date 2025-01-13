@@ -18,8 +18,6 @@ from taskiq_redis import ListQueueBroker
 from taskiq import SimpleRetryMiddleware, TaskiqScheduler
 from taskiq.schedule_sources import LabelScheduleSource
 import jwt
-import tweepy
-from solana_agent.services.x_bot import XBot
 
 # Initialize logging
 logging.basicConfig(level=logging.INFO)
@@ -48,30 +46,10 @@ chat_service = ChatService()
 def fetch_and_store_tokens():
     solana_actions.fetch_and_store_tokens()
 
-
-### Uncomment the following lines to enable Twitter API
-# bearer_token = config.TWITTER_BEARER_TOKEN
-# consumer_key = config.TWITTER_CONSUMER_KEY
-# consumer_secret = config.TWITTER_CONSUMER_SECRET
-# access_token = config.TWITTER_ACCESS_TOKEN
-# access_secret = config.TWITTER_ACCESS_SECRET
-#
-# auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-# auth.set_access_token(access_token, access_secret)
-# tweepy_client = tweepy.Client(bearer_token, consumer_key, consumer_secret, access_token, access_secret)
-# api = tweepy.API(auth)
-# x_bot = XBot(tweepy_client, api)
-###
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     try:
         if not broker.is_worker_process:
-        
-            ### Uncomment the following line to enable Twitter API
-            # asyncio.create_task(x_bot.run())
-            ###
-
             fetch_and_store_tokens()
 
             print("Starting broker & scheduler...")
