@@ -2,7 +2,7 @@
 
 [![Solana Agent](https://dl.walletbubbles.com/solana-agent-logo.png?width=200)](https://solana-agent.com)
 
-## Why Solana Agent
+## Why Solana Agent App
 
 ### Batteries Included
 * Provides conversational memory, parallel function calling, smart automatic tool choice, and message history using MongoDB
