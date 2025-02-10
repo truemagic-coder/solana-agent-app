@@ -50,6 +50,9 @@
 ## Production Apps
 * [Solana Agent Copilot](https://ai.solana-agent.com)
 
+## Solana Agent AI Framework
+* [Solana Agent](https://github.com/truemagic-coder/solana-agent)
+
 ## Contributing
 Contributions to Solana Agent Example App are welcome! Please feel free to submit a Pull Request.
 
