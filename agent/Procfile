@@ -1,1 +1,3 @@
-web: gunicorn -t 120 -k uvicorn.workers.UvicornWorker solana_agent.main:app
+web: gunicorn -t 120 -k uvicorn.workers.UvicornWorker solana_agent_app.main:app
+worker: taskiq worker solana_agent_app.main:broker
+scheduler: taskiq scheduler solana_agent_app.main:scheduler

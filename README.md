@@ -1,41 +1,27 @@
-# Solana Agent
+# Solana Agent Example App
 
-[![Solana Swarm](https://cdn.cometheart.com/solana-agent-logo.jpg)](https://solana-agent.com)
+[![Solana Agent](https://dl.walletbubbles.com/solana-agent-logo.png?width=200)](https://solana-agent.com)
 
 ## Why Solana Agent
 
 ### Batteries Included
-* Based on CyberChipped - a Python OpenAI Assistant Framework
 * Provides conversational memory, parallel function calling, smart automatic tool choice, and message history using MongoDB
 * Utilizes FastAPI and Next.js - the most popular and supported web frameworks 
 * Quickly add custom functions to your AI agent in a few lines of code
-* Solana Agent Actions: 
-    * Transfer tokens from the Agent wallet to other wallets - via Helius
-    * Swap tokens inside the Agent wallet - via Jupiter and Helius
-* Social Integrations: 
-    * X - via the X API (Basic Plan)
-
-### Better than Eliza
-* Solana Agent requires no-code changes, only adding simple environment variables, and MongoDB/Redis to work out of the box for a complete AI Agent with real-time chat
-* Solana Agent's conversational history is superior to RAG for user interactivity, tool usage, and agent memory/recall/context
-* Solana Agent's parallel tool calling and automatic AI tool choice is superior than using any LLM completion API with tool usage from any provider
-* Solana Agent is an opinionated framework with one way to do things to keep things simple
-* Solana Agent is written in Python the most popular language on GitHub and in the AI field
-* Solana Agent replies on X in real-time and only replies when it should
+* Supports Solana/SPL transfers and Jupiter Swapping via Next.js (soon just Python...)
 
 ## Local Dev
 
 ###  Run locally on Mac or Linux
-* Clone this repo - `git clone https://github.com/truemagic-coder/solana-agent`
+* Clone this repo - `git clone https://github.com/truemagic-coder/solana-agent-app`
 * Ensure the latest LTS Node is installed with yarn
-* Ensure Python 3.12.7 is installed with poetry
+* Ensure Python 3.12.8 is installed with poetry
 * Ensure Docker and Docker Compose are installed
 * `docker-compose up -d`
 * Rename `.env.sample` to `.env` in `site` and `agent`
 * Get and set the PRIVATE_KEY (in base58 string format) in the `site` folder for `.env` file - if you want Solana Actions like sending tokens and swapping with funds from this wallet
 * Get and set the OPENAI_API_KEY var in the `agent` folder for `.env` file - [OpenAI API Keys](https://platform.openai.com/api-keys)
 * Get and set the HELIUS_API_KEY and HELIUS_RPC_URL in both folders `.env` files - [Helius](https://helius.dev)
-* If you want XBot - then setup a X developer account and setup the keys in `agent` folder for `.env` file - and uncomment the code in `main.py`
 * Set all the secrets to match between the `.env` files and make them `uuidv4`s or other strong keys
 * Open two terminal windows
 * `Terminal 1`: `cd site && yarn install && yarn dev`
@@ -60,14 +46,12 @@
 * Functions must be fully sync - you cannot use async libraries or methods - example: using `requests` not `httpx` (sync vs async)
 * Don't make tool outputs (strings) too large as when calling multiple calls in parallel has a size limit (combined)
 * Keep in mind the 128k model token input limit when processing data especially from APIs
-* OpenAI `gpt-4o` is recommended over `gpt-4o-mini` simply for AI IQ but if cost is a concern then mini may work for your agent usage
 
 ## Production Apps
-* [WB AI Agent](https://ai.walletbubbles.com)
-* [Solana Agent X Bot](https://solana-agent.com)
+* [Solana Agent Copilot](https://ai.solana-agent.com)
 
 ## Contributing
-Contributions to Solana Agent are welcome! Please feel free to submit a Pull Request.
+Contributions to Solana Agent Example App are welcome! Please feel free to submit a Pull Request.
 
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details.

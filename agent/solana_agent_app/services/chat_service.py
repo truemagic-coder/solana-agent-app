@@ -1,5 +1,5 @@
-from cyberchipped import AI, MongoDatabase
-from solana_agent.config import config
+from solana_agent import AI, MongoDatabase
+from solana_agent_app.config import config
 from typing import AsyncGenerator
 from pymongo import MongoClient
 from .solana_actions import SolanaActions
@@ -34,9 +34,8 @@ class ChatService:
     def ai(self):
         if self._ai is None:
             ai = AI(
-                api_key=config.OPENAI_API_KEY,
-                name="Solana Agent v7",
-                model="gpt-4o",
+                openai_api_key=config.OPENAI_API_KEY,
+                name="Solana Agent v1",
                 instructions=self._instructions,
                 database=self.database,
             )
