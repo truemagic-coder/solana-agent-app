@@ -1,6 +1,6 @@
 import json
 import requests
-from solana_agent.config import config
+from solana_agent_app.config import config
 from pymongo import MongoClient, UpdateOne
 
 class SolanaActions:
