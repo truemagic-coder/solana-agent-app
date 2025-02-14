@@ -367,29 +367,6 @@ files = [
 all = ["flake8 (>=7.1.1)", "mypy (>=1.11.2)", "pytest (>=8.3.2)", "ruff (>=0.6.2)"]
 
 [[package]]
-name = "importlib-metadata"
-version = "8.6.1"
-description = "Read metadata from Python packages"
-optional = false
-python-versions = ">=3.9"
-files = [
-    {file = "importlib_metadata-8.6.1-py3-none-any.whl", hash = "sha256:02a89390c1e15fdfdc0d7c6b25cb3e62650d0494005c97d6f148bf5b9787525e"},
-    {file = "importlib_metadata-8.6.1.tar.gz", hash = "sha256:310b41d755445d74569f993ccfc22838295d9fe005425094fad953d7f15c8580"},
-]
-
-[package.dependencies]
-zipp = ">=3.20"
-
-[package.extras]
-check = ["pytest-checkdocs (>=2.4)", "pytest-ruff (>=0.2.1)"]
-cover = ["pytest-cov"]
-doc = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-lint"]
-enabler = ["pytest-enabler (>=2.2)"]
-perf = ["ipython"]
-test = ["flufl.flake8", "importlib_resources (>=1.3)", "jaraco.test (>=5.4)", "packaging", "pyfakefs", "pytest (>=6,!=8.1.*)", "pytest-perf (>=0.9.2)"]
-type = ["pytest-mypy"]
-
-[[package]]
 name = "jiter"
 version = "0.8.2"
 description = "Fast iterable JSON parser."
@@ -500,13 +477,13 @@ zstd = ["pymongo[zstd] (>=4.5,<5)"]
 
 [[package]]
 name = "openai"
-version = "1.61.1"
+version = "1.63.0"
 description = "The official Python library for the openai API"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "openai-1.61.1-py3-none-any.whl", hash = "sha256:72b0826240ce26026ac2cd17951691f046e5be82ad122d20a8e1b30ca18bd11e"},
-    {file = "openai-1.61.1.tar.gz", hash = "sha256:ce1851507218209961f89f3520e06726c0aa7d0512386f0f977e3ac3e4f2472e"},
+    {file = "openai-1.63.0-py3-none-any.whl", hash = "sha256:a664dfc78f0a05ca46c3e21f344f840cf6bf7174f13cfa9de214ed28bfca1dda"},
+    {file = "openai-1.63.0.tar.gz", hash = "sha256:597d7a1b35b113e5a09fcb953bdb1eef44f404a39985f3d7573b3ab09221fd66"},
 ]
 
 [package.dependencies]
@@ -532,17 +509,6 @@ python-versions = ">=3.8"
 files = [
     {file = "packaging-24.2-py3-none-any.whl", hash = "sha256:09abb1bccd265c01f4a3aa3f7a7db064b36514d2cba19a2f694fe6150451a759"},
     {file = "packaging-24.2.tar.gz", hash = "sha256:c228a6dc5e932d346bc5739379109d49e8853dd8223571c7c5b55260edc0b97f"},
-]
-
-[[package]]
-name = "pycron"
-version = "3.1.2"
-description = "Simple cron-like parser, which determines if current datetime matches conditions."
-optional = false
-python-versions = "<4.0,>=3.9"
-files = [
-    {file = "pycron-3.1.2-py3-none-any.whl", hash = "sha256:30e4a01889dfb471e80cc76a5c0ab87e675146a7f6d2d66a2e4bdb4e2975ef3d"},
-    {file = "pycron-3.1.2.tar.gz", hash = "sha256:114c71bc61002b850a416e33e72a8c6de75b9f5c4228e86d7babd8a7ea232d94"},
 ]
 
 [[package]]
@@ -788,17 +754,6 @@ files = [
 cli = ["click (>=5.0)"]
 
 [[package]]
-name = "pytz"
-version = "2025.1"
-description = "World timezone definitions, modern and historical"
-optional = false
-python-versions = "*"
-files = [
-    {file = "pytz-2025.1-py2.py3-none-any.whl", hash = "sha256:89dd22dca55b46eac6eda23b2d72721bf1bdfef212645d81513ef5d03038de57"},
-    {file = "pytz-2025.1.tar.gz", hash = "sha256:c2db42be2a2518b28e65f9207c4d05e6ff547d1efa4086469ef855e4ab70178e"},
-]
-
-[[package]]
 name = "pyyaml"
 version = "6.0.2"
 description = "YAML parser and emitter for Python"
@@ -861,21 +816,6 @@ files = [
 ]
 
 [[package]]
-name = "redis"
-version = "5.2.1"
-description = "Python client for Redis database and key-value store"
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "redis-5.2.1-py3-none-any.whl", hash = "sha256:ee7e1056b9aea0f04c6c2ed59452947f34c4940ee025f5dd83e6a6418b6989e4"},
-    {file = "redis-5.2.1.tar.gz", hash = "sha256:16f2e22dff21d5125e8481515e386711a34cbec50f0e44413dd7d9c060a54e0f"},
-]
-
-[package.extras]
-hiredis = ["hiredis (>=3.0.0)"]
-ocsp = ["cryptography (>=36.0.1)", "pyopenssl (==23.2.1)", "requests (>=2.31.0)"]
-
-[[package]]
 name = "requests"
 version = "2.32.3"
 description = "Python HTTP for Humans."
@@ -909,13 +849,13 @@ files = [
 
 [[package]]
 name = "solana-agent"
-version = "1.0.0"
+version = "1.1.2"
 description = "Build self-learning AI Agents"
 optional = false
 python-versions = "<4.0,>=3.9"
 files = [
-    {file = "solana_agent-1.0.0-py3-none-any.whl", hash = "sha256:9a12f56b558061f99ccbd324e28802d35ba057d8a66f8f82f95c2c7633b72053"},
-    {file = "solana_agent-1.0.0.tar.gz", hash = "sha256:10fe90e373d582201405cada2bbf33faeccd7c6638f44039b3d2411a59f0a506"},
+    {file = "solana_agent-1.1.2-py3-none-any.whl", hash = "sha256:a3a800b30e7afe72ba27dadac3ba4cc17bef33a4d380b3cfbe956647233e4011"},
+    {file = "solana_agent-1.1.2.tar.gz", hash = "sha256:4c1c7822ce203313fa559d45cdb8c36430d9f36d90031a727feeff8aa032fdc0"},
 ]
 
 [package.dependencies]
@@ -960,77 +900,6 @@ anyio = ">=3.6.2,<5"
 
 [package.extras]
 full = ["httpx (>=0.27.0,<0.29.0)", "itsdangerous", "jinja2", "python-multipart (>=0.0.18)", "pyyaml"]
-
-[[package]]
-name = "taskiq"
-version = "0.11.11"
-description = "Distributed task queue with full async support"
-optional = false
-python-versions = "<4.0.0,>=3.8.1"
-files = [
-    {file = "taskiq-0.11.11-py3-none-any.whl", hash = "sha256:41c2f27355c90924e6fcd693aade7d21bb974a7bbc71bd54d3026cece9e806a2"},
-    {file = "taskiq-0.11.11.tar.gz", hash = "sha256:c2c10eac817c230b338e0059873c75236efa38700495206424f0fae18228c426"},
-]
-
-[package.dependencies]
-anyio = ">=3"
-importlib-metadata = "*"
-packaging = ">=19"
-pycron = ">=3.0.0,<4.0.0"
-pydantic = ">=1.0,<=3.0"
-pytz = "*"
-taskiq_dependencies = ">=1.3.1,<2"
-typing-extensions = ">=3.10.0.0"
-
-[package.extras]
-cbor = ["cbor2 (>=5,<6)"]
-metrics = ["prometheus_client (>=0,<1)"]
-msgpack = ["msgpack (>=1.0.7,<2.0.0)"]
-orjson = ["orjson (>=3,<4)"]
-reload = ["gitignore-parser (>=0,<1)", "watchdog (>=4,<5)"]
-uv = ["uvloop (>=0.16.0,<1)"]
-zmq = ["pyzmq (>=26,<27)"]
-
-[[package]]
-name = "taskiq-dependencies"
-version = "1.5.6"
-description = "FastAPI like dependency injection implementation"
-optional = false
-python-versions = "<4.0,>=3.9"
-files = [
-    {file = "taskiq_dependencies-1.5.6-py3-none-any.whl", hash = "sha256:fba4dbaac47dfc8817fd2efeb13cefe41f45790b4871ba65fcdfd3c74f7121dc"},
-    {file = "taskiq_dependencies-1.5.6.tar.gz", hash = "sha256:5756690fd9f1f9efac34aac5959f173724e898a852de790238f97090467c4e3c"},
-]
-
-[[package]]
-name = "taskiq-fastapi"
-version = "0.3.3"
-description = "FastAPI integration for taskiq"
-optional = false
-python-versions = "<4.0.0,>=3.8.1"
-files = [
-    {file = "taskiq_fastapi-0.3.3-py3-none-any.whl", hash = "sha256:b08df2f923ead3acaddae4e0afe9f07a29b9fac879300ba964c894288c91e90a"},
-    {file = "taskiq_fastapi-0.3.3.tar.gz", hash = "sha256:c72fd3f1b602b7ab611ce7a5131c9b12167c5fc1b11f3c938b0c7a3f0e507b83"},
-]
-
-[package.dependencies]
-fastapi = ">=0.93.0"
-taskiq = ">=0.8.0,<1"
-
-[[package]]
-name = "taskiq-redis"
-version = "1.0.2"
-description = "Redis integration for taskiq"
-optional = false
-python-versions = "<4.0.0,>=3.8.1"
-files = [
-    {file = "taskiq_redis-1.0.2-py3-none-any.whl", hash = "sha256:d24c4ba34560eb882af351ec34eab4fc90ff6b82ef9b3245d0a499d335b92086"},
-    {file = "taskiq_redis-1.0.2.tar.gz", hash = "sha256:9a8e8b8e26847e25fbe6e6f8f910632a66f3d38bb5249699193efcfd1e84e25f"},
-]
-
-[package.dependencies]
-redis = ">=5,<6"
-taskiq = ">=0.11.1,<1"
 
 [[package]]
 name = "tqdm"
@@ -1334,26 +1203,7 @@ httpx = ">=0.21.2"
 pydantic = ">=1.9.2"
 typing_extensions = ">=4.0.0"
 
-[[package]]
-name = "zipp"
-version = "3.21.0"
-description = "Backport of pathlib-compatible object wrapper for zip files"
-optional = false
-python-versions = ">=3.9"
-files = [
-    {file = "zipp-3.21.0-py3-none-any.whl", hash = "sha256:ac1bbe05fd2991f160ebce24ffbac5f6d11d83dc90891255885223d42b3cd931"},
-    {file = "zipp-3.21.0.tar.gz", hash = "sha256:2c9958f6430a2040341a52eb608ed6dd93ef4392e02ffe219417c1b28b5dd1f4"},
-]
-
-[package.extras]
-check = ["pytest-checkdocs (>=2.4)", "pytest-ruff (>=0.2.1)"]
-cover = ["pytest-cov"]
-doc = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-lint"]
-enabler = ["pytest-enabler (>=2.2)"]
-test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", "jaraco.test", "more-itertools", "pytest (>=6,!=8.1.*)", "pytest-ignore-flaky"]
-type = ["pytest-mypy"]
-
 [metadata]
 lock-version = "2.0"
 python-versions = "3.12.8"
-content-hash = "8e9603faa41bd3248a26d6edee0b4f41b022e6abbb4ecc546a656899a7880ea8"
+content-hash = "3df79fbe7bc6f21dc128001cf985db808b3212178627167cec5b503b03796d21"

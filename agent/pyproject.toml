@@ -7,20 +7,17 @@ packages = [{include = "solana_agent_app"}]
 
 [tool.poetry.dependencies]
 python = "3.12.8"
-fastapi = "0.115.8"
-uvicorn = {version = "0.34.0", extras = ["standard"]}
-gunicorn = "23.0.0"
-python-dotenv = "1.0.1"
+fastapi = "^0.115.8"
+uvicorn = {version = "^0.34.0", extras = ["standard"]}
+gunicorn = "^23.0.0"
+python-dotenv = "^1.0.1"
 pydantic = "*"
-motor = "3.7.0"
-solana-agent = "1.0.0"
-sse-starlette = "2.2.1"
-pyjwt = "2.10.1"
-httpx = "0.28.1"
-taskiq = "0.11.11"
-taskiq-redis = "1.0.2"
-taskiq-fastapi = "0.3.3"
-requests = "2.32.3"
+motor = "^3.7.0"
+solana-agent = "^1.1.2"
+sse-starlette = "^2.2.1"
+pyjwt = "^2.10.1"
+requests = "^2.32.3"
+httpx = "^0.28.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

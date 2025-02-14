@@ -1,72 +1,29 @@
-from contextlib import asynccontextmanager
 import uuid
 from fastapi import FastAPI, HTTPException, Header, Request, Depends
 from fastapi.middleware.cors import CORSMiddleware
 import logging
 import asyncio
-import httpx
 from pydantic import BaseModel
-from pymongo import MongoClient
 import pymongo
 from sse_starlette.sse import EventSourceResponse
 from datetime import datetime as dt
 from solana_agent_app.config import config
-from solana_agent_app.services.chat_service import ChatService
-from solana_agent_app.services.solana_actions import SolanaActions
-import taskiq_fastapi
-from taskiq_redis import ListQueueBroker
-from taskiq import SimpleRetryMiddleware, TaskiqScheduler
-from taskiq.schedule_sources import LabelScheduleSource
+from solana_agent import AI, MongoDatabase
 import jwt
+import httpx
 
 # Initialize logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Initialize MongoDB client
-client = MongoClient(config.MONGO_URL)
-db = client[config.MONGO_DB]
-
-broker = ListQueueBroker(config.REDIS_URL).with_middlewares(
-    SimpleRetryMiddleware(default_retry_count=3),
-)
-
-schedule_source = LabelScheduleSource(broker)
-scheduler = TaskiqScheduler(broker=broker, sources=[schedule_source])
-
-solana_actions = SolanaActions()
-chat_service = ChatService()
-
-
-@broker.task(
-    retry_on_error=False,
-    timeout=60,
-    schedule=[{"cron": "*/25 * * * *"}],
-)
-def fetch_and_store_tokens():
-    solana_actions.fetch_and_store_tokens()
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    try:
-        if not broker.is_worker_process:
-            fetch_and_store_tokens()
-
-            print("Starting broker & scheduler...")
-            await broker.startup()
-            await scheduler.startup()
-        yield
-    except Exception as e:
-        logger.error(f"Error during startup: {str(e)}")
-    finally:
-        client.close()
+database = MongoDatabase(config.MONGO_URL, config.MONGO_DB)
 
 
 class ChatRequest(BaseModel):
     text: str
 
 
-app = FastAPI(lifespan=lifespan)
+app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
@@ -78,7 +35,24 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-taskiq_fastapi.init(broker, "solana_agent.main:app")
+
+ai = AI(
+    zep_api_key=config.ZEP_API_KEY,
+    openai_api_key=config.OPENAI_API_KEY,
+    perplexity_api_key=config.PERPLEXITY_API_KEY,
+    grok_api_key=config.GROK_API_KEY,
+    name="Solana Agent Degen v1",
+    instructions="""
+        I am Solana Agent - a Solana Degen.
+        I am funny and have a good sense of humor.
+        I use emjois.
+        I use my research tool when required to provide more information on a topic.
+        I always use my memory tool to answer user questions.
+        I always check the time on every user interaction.
+        I use my reason tool when required to evaluate and/or critique ideas.
+    """,
+    database=database,
+)
 
 
 async def check_bearer_token(authorization: str = Header(...)):
@@ -108,7 +82,7 @@ async def handler_rpc_post(request: Request):
         async with httpx.AsyncClient() as client:
             response = await client.request(
                 method=request.method,
-                url=config.HELIUS_RPC,  # Replace with the actual API URL
+                url=config.RPC_URL,  # Replace with the actual API URL
                 json=data,
                 headers={"Content-Type": "application/json"},
             )
@@ -123,7 +97,7 @@ async def handler_rpc_get(request: Request):
         async with httpx.AsyncClient() as client:
             response = await client.request(
                 method=request.method,
-                url=config.HELIUS_RPC,  # Replace with the actual API URL
+                url=config.RPC_URL,  # Replace with the actual API URL
                 headers={"Content-Type": "application/json"},
             )
         return response.json()
@@ -143,9 +117,11 @@ async def history(
 
     try:
         skips = page_size * (page_num - 1)
-        total_items = len(db.messages.find({"user_id": user_id}).to_list(None))
+        total_items = len(
+            await database.db.messages.find({"user_id": user_id}).to_list(None)
+        )
         cursor = (
-            db.messages.find({"user_id": user_id})
+            await database.db.messages.find({"user_id": user_id})
             .sort("timestamp", pymongo.DESCENDING)
             .skip(skips)
             .limit(page_size)
@@ -180,7 +156,7 @@ async def history(
 
 @app.get("/sse/{user_id}/{conversation_id}")
 async def sse_endpoint(user_id: str, conversation_id: str, request: Request):
-    conversation = db.conversations.find_one(
+    conversation = await database.db.conversations.find_one(
         {"user_id": user_id, "conversation_id": conversation_id, "status": "active"}
     )
     if not conversation:
@@ -207,20 +183,40 @@ async def sse_endpoint(user_id: str, conversation_id: str, request: Request):
 
     async def message_producer():
         try:
-            async for text in chat_service.generate_response(
-                user_id, conversation["last_message"]
-            ):
-                await queue.put({"event": "message", "data": text})
-                await asyncio.sleep(0.1)  # Small delay to ensure chunked response
 
-            # Send a close event
-            await queue.put({"event": "close", "data": ""})
+            @ai.add_tool
+            def research(query: str) -> str:
+                internet_search_results = ai.search_internet(query=query)
+                x_search_results = ai.search_x(query=query)
+                return internet_search_results + x_search_results
 
-            # Update conversation status to "completed" in MongoDB
-            db.conversations.update_one(
-                {"user_id": user_id, "conversation_id": conversation_id},
-                {"$set": {"status": "completed"}},
-            )
+            @ai.add_tool
+            def reason(query: str) -> str:
+                return ai.reason(user_id=user_id, query=query)
+
+            @ai.add_tool
+            def memory(query: str) -> str:
+                return ai.search_facts(user_id=user_id, query=query)
+
+            @ai.add_tool
+            def check_time() -> str:
+                return ai.check_time()
+
+            async with ai as ai_instance:
+                async for text in ai_instance.text(
+                    user_id, conversation["last_message"]
+                ):
+                    await queue.put({"event": "message", "data": text})
+                    await asyncio.sleep(0.1)  # Small delay to ensure chunked response
+
+                # Send a close event
+                await queue.put({"event": "close", "data": ""})
+
+                # Update conversation status to "completed" in MongoDB
+                await database.db.conversations.update_one(
+                    {"user_id": user_id, "conversation_id": conversation_id},
+                    {"$set": {"status": "completed"}},
+                )
         except Exception as e:
             logger.error(f"Error in message producer: {str(e)}")
             await queue.put({"event": "error", "data": str(e)})
@@ -242,7 +238,7 @@ async def start_conversation(
             detail="Unauthorized",
         )
     conversation_id = str(uuid.uuid4())  # Generate a unique conversation ID
-    db.conversations.insert_one(
+    await database.db.conversations.insert_one(
         {
             "user_id": user_id,
             "conversation_id": conversation_id,

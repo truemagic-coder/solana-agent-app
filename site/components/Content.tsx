@@ -1,14 +1,23 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable no-param-reassign */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react/no-unstable-nested-components */
+/* eslint-disable react/no-unused-prop-types */
+/* eslint-disable react/function-component-definition */
 /* eslint-disable max-len */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable consistent-return */
+/* eslint-disable no-await-in-loop */
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable import/extensions */
+
 import 'event-source-polyfill';
 import React, {
   useState, useEffect, useRef,
   useMemo,
-  useCallback,
 } from 'react';
 import { Loader2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
@@ -21,12 +30,17 @@ import rehypeRaw from 'rehype-raw';
 import { useSession } from 'next-auth/react';
 import WalletMultiButtonDynamic from 'components/WalletAdapter';
 import { v4 } from 'uuid';
+import Link from 'next/link';
 import { useWallet } from '@solana/wallet-adapter-react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { visit } from 'unist-util-visit';
 import { useChatStore } from '../utils/chatStore';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+
+// Import JUP CSS
+import '@jup-ag/terminal/css';
 
 // Import KaTeX CSS
 import 'katex/dist/katex.min.css';
@@ -83,7 +97,6 @@ function External() {
   const [isStreaming, setIsStreaming] = useState(false);
   const { connected, publicKey } = useWallet();
   const [eventSource, setEventSource] = useState<EventSource | null>(null);
-  const chatContainerRef = useRef<HTMLDivElement>(null);
   const { data: session, status } = useSession();
 
   const {
@@ -101,8 +114,33 @@ function External() {
     [chatHistory.data],
   );
 
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+  const [shouldAutoScroll, setShouldAutoScroll] = useState(true);
+
+  const handleScroll = () => {
+    const container = chatContainerRef.current;
+    if (container) {
+      const { scrollTop, scrollHeight, clientHeight } = container;
+      setShouldAutoScroll(scrollHeight - scrollTop - clientHeight < 200);
+    }
+  };
+
   useEffect(() => {
-    if (publicKey && !fetchError && !fetchLoading && chatHistory.data.length === 0 && session) {
+    const container = chatContainerRef.current;
+    if (container) {
+      container.addEventListener('scroll', handleScroll);
+      return () => container.removeEventListener('scroll', handleScroll);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (shouldAutoScroll && chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [sortedChatHistory, shouldAutoScroll]);
+
+  useEffect(() => {
+    if (publicKey && chatHistory.data.length === 0 && session) {
       fetchData(publicKey.toBase58(), session.user?.name as string, 1);
     }
   }, [publicKey, session]);
@@ -110,16 +148,6 @@ function External() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
   };
-
-  const scrollToBottom = useCallback(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-    }
-  }, []);
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [isStreaming, scrollToBottom, sortedChatHistory, status]);
 
   const handleMessageSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -226,7 +254,6 @@ function External() {
     });
   };
 
-  // eslint-disable-next-line react/no-unstable-nested-components, react/function-component-definition
   const CustomMarkdown = ({ children }: { children: string }) => (
     <ReactMarkdown
       remarkPlugins={[remarkGfm, remarkAddSpaceAfterTable, remarkAddSpaceBetweenColumns, remarkBreaks, remarkStringify, [remarkMath, remarkMathOptions]]}
@@ -272,71 +299,71 @@ function External() {
   const hasMore = !allDataFetched;
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex flex-col p-4 relative">
-      <div className="w-full mx-auto">
-        <div id="overlay-button" />
-        <div className="flex flex-col items-center mb-16 mt-5">
-          <img
-            src="/logo.jpg"
-            width={100}
-            alt="logo"
-            className="mb-4 max-w-4xl mx-auto"
-          />
-          <h2 className="text-xl italic my-2 font-bold">Solana Agent</h2>
+    <div className="h-screen bg-gray-900 text-white flex flex-col relative">
+      <nav className="bg-gray-900 p-4 w-full">
+        <div className="flex items-center justify-between w-full">
+          <div className="ml-4">
+            <Link href="https://solana-agent.com">
+              <Avatar>
+                <AvatarImage src="/logo.png" />
+                <AvatarFallback>SA</AvatarFallback>
+              </Avatar>
+            </Link>
+          </div>
+          <div className="mr-4">
+            <WalletMultiButtonDynamic />
+          </div>
         </div>
-
-        <div className="flex flex-col items-center my-4">
-          <WalletMultiButtonDynamic />
-        </div>
-
-        {status === 'authenticated' ? (
-          <div className="w-full px-4 mb-4 py-4">
-            <div
-              ref={chatContainerRef}
-              className="w-full min-h-[500px] max-h-[calc(100vh-500px)] bg-gray-800 p-4 rounded-lg mb-4 overflow-y-auto"
+      </nav>
+      {(status === 'authenticated') && (!fetchLoading && !fetchError) ? (
+        <div className="flex flex-col flex-grow px-4 pb-5" style={{ height: 'calc(100vh - 150px)' }}>
+          <div
+            ref={chatContainerRef}
+            className="flex-grow w-full bg-gray-800 p-4 rounded-lg mb-4 overflow-y-auto"
+          >
+            <InfiniteScroll
+              loadMore={loadMoreData}
+              isReverse
+              hasMore={hasMore}
+              initialLoad={false}
             >
-              <InfiniteScroll
-                loadMore={loadMoreData}
-                hasMore={hasMore}
-                isReverse
-                initialLoad={false}
-              >
-                {sortedChatHistory.map((item, index) => (
-                  <ChatRow key={item.id} item={item} isLast={index === sortedChatHistory.length - 1} />
-                ))}
-              </InfiniteScroll>
-            </div>
-            <form onSubmit={handleMessageSubmit} className="flex w-full">
-              <Input
-                type="text"
-                placeholder="Ask WB..."
-                value={message}
-                onChange={handleInputChange}
-                className="flex-grow bg-gray-800 text-white pl-3 placeholder:pl-1 rounded-none rounded-l-md rounded-r-none border-none focus:outline-none focus:ring-0 focus:border-gray-800 h-12 text-sm sm:text-base"
-                style={{ fontSize: '16px' }}
-                disabled={fetchLoading}
-              />
-              <Button
-                type="submit"
-                className="bg-blue-400 hover:bg-blue-500 rounded-none rounded-r-md rounded-l-none h-12 sm:px-4 text-sm sm:text-base"
-                onClick={handleMessageSubmit}
-                disabled={fetchLoading}
-              >
-                {isStreaming ? 'Cancel' : fetchLoading ? 'Loading...' : 'Send'}
-              </Button>
-            </form>
+              {sortedChatHistory.map((item, index) => (
+                <ChatRow
+                  key={`${item.id}+${index}`}
+                  item={item}
+                  isLast={index === sortedChatHistory.length - 1}
+                />
+              ))}
+            </InfiniteScroll>
           </div>
-
-        ) : (
-          <div className="w-full px-4 mb-4">
-            <div className="max-w mx-auto flex flex-col items-center">
-              <p className="text-center">
-                Please login to start chatting with Solana Agent.
-              </p>
-            </div>
+          <form onSubmit={handleMessageSubmit} className="flex w-full">
+            <Input
+              type="text"
+              placeholder="Ask Copilot..."
+              value={message}
+              onChange={handleInputChange}
+              className="flex-grow bg-gray-800 text-white pl-3 placeholder:pl-1 rounded-none rounded-l-md border-none focus:outline-none focus:ring-0 focus:border-gray-800 h-12 text-sm sm:text-base"
+              style={{ fontSize: '16px' }}
+              disabled={fetchLoading}
+            />
+            <Button
+              type="submit"
+              className="bg-blue-400 hover:bg-blue-500 rounded-none rounded-r-md h-12 sm:px-4 text-sm sm:text-base"
+              onClick={handleMessageSubmit}
+              disabled={fetchLoading}
+            >
+              {isStreaming ? 'Cancel' : fetchLoading ? 'Loading...' : 'Send'}
+            </Button>
+          </form>
+        </div>
+      ) : (
+        <div className="w-full px-4 my-4">
+          <div className="max-w mx-auto flex flex-col items-center">
+            <p className="text-center font-bold mb-5">Please connect to chat with Copilot.</p>
+            <img src="/copilot.png" alt="Copilot" className="w-80% my-4" />
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -4,6 +4,10 @@
 import { create } from 'zustand';
 import axios from 'axios';
 
+interface AgentVerified {
+  success: boolean;
+}
+
 interface ChatMessage {
   id: string;
   message: string;
@@ -27,8 +31,12 @@ interface ChatStore {
   allDataFetched: boolean;
   fetchLoading: boolean;
   fetchError: boolean;
+  agentVerified: boolean;
+  agentVerifiedLoading: boolean;
+  agentVerifiedError: boolean;
   currentPage: number;
   fetchData: (userId: string, jwt: string, pageNumber: number) => Promise<void>;
+  agentCheck: (userId: string, jwt: string) => Promise<void>;
   addMessage: (message: ChatMessage) => void;
   updateLastMessage: (response: string) => void;
   setFetchLoading: (loading: boolean) => void;
@@ -49,6 +57,9 @@ export const useChatStore = create<ChatStore>()(
     fetchLoading: false,
     fetchError: false,
     initialFetchDone: false,
+    agentVerified: false,
+    agentVerifiedLoading: false,
+    agentVerifiedError: false,
     currentPage: 1,
     fetchData: async (userId: string, jwt: string, pageNumber: number) => {
       set({ fetchLoading: true, fetchError: false });
@@ -84,6 +95,27 @@ export const useChatStore = create<ChatStore>()(
         console.error(err);
       } finally {
         set({ fetchLoading: false });
+      }
+    },
+    agentCheck: async (userId: string, jwt: string) => {
+      try {
+        set({ agentVerifiedLoading: true, agentVerifiedError: false });
+        const response = await axios.get<AgentVerified>(`${BASE_URL}/agent_check/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+        });
+        // if not 200, throw error
+        if (response.status !== 200) {
+          set({ agentVerified: false, agentVerifiedLoading: false, agentVerifiedError: true });
+        } else {
+          set({ agentVerified: true, agentVerifiedLoading: false, agentVerifiedError: false });
+        }
+      } catch (err) {
+        set({ agentVerified: false, agentVerifiedLoading: false, agentVerifiedError: true });
+        console.error(err);
       }
     },
     addMessage: (message: ChatMessage) => set((state) => {
