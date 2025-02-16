@@ -14,6 +14,9 @@ class Config:
     PERPLEXITY_API_KEY = os.getenv("PERPLEXITY_API_KEY")
     GROK_API_KEY = os.getenv("GROK_API_KEY")
     HELIUS_RPC_URL = os.getenv("HELIUS_RPC_URL")
+    PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
+    PINECONE_INDEX_NAME = os.getenv("PINECONE_INDEX_NAME")
+    COHERE_API_KEY = os.getenv("COHERE_API_KEY")
 
 
 config = Config()

@@ -41,6 +41,9 @@ ai = AI(
     openai_api_key=config.OPENAI_API_KEY,
     perplexity_api_key=config.PERPLEXITY_API_KEY,
     grok_api_key=config.GROK_API_KEY,
+    pinecone_api_key=config.PINECONE_API_KEY,
+    pinecone_index_name=config.PINECONE_INDEX_NAME,
+    cohere_api_key=config.COHERE_API_KEY,
     name="Solana Agent Degen v1",
     instructions="""
         I am Solana Agent - a Solana Degen.
@@ -50,6 +53,7 @@ ai = AI(
         I always use my memory tool to answer user questions.
         I always check the time on every user interaction.
         I use my reason tool when required to evaluate and/or critique ideas.
+        I only use either my reason tool or research tool as the reason tool also provides research.
     """,
     database=database,
 )
@@ -117,11 +121,9 @@ async def history(
 
     try:
         skips = page_size * (page_num - 1)
-        total_items = len(
-            await database.db.messages.find({"user_id": user_id}).to_list(None)
-        )
+        total_items = len(database.db.messages.find({"user_id": user_id}).to_list(None))
         cursor = (
-            await database.db.messages.find({"user_id": user_id})
+            database.db.messages.find({"user_id": user_id})
             .sort("timestamp", pymongo.DESCENDING)
             .skip(skips)
             .limit(page_size)
@@ -156,7 +158,7 @@ async def history(
 
 @app.get("/sse/{user_id}/{conversation_id}")
 async def sse_endpoint(user_id: str, conversation_id: str, request: Request):
-    conversation = await database.db.conversations.find_one(
+    conversation = database.db.conversations.find_one(
         {"user_id": user_id, "conversation_id": conversation_id, "status": "active"}
     )
     if not conversation:
@@ -213,7 +215,7 @@ async def sse_endpoint(user_id: str, conversation_id: str, request: Request):
                 await queue.put({"event": "close", "data": ""})
 
                 # Update conversation status to "completed" in MongoDB
-                await database.db.conversations.update_one(
+                database.db.conversations.update_one(
                     {"user_id": user_id, "conversation_id": conversation_id},
                     {"$set": {"status": "completed"}},
                 )
@@ -228,6 +230,16 @@ async def sse_endpoint(user_id: str, conversation_id: str, request: Request):
     return EventSourceResponse(event_generator())
 
 
+class Body(BaseModel):
+    value: str
+
+
+@app.post("/kb_upload")
+async def upload_document(body: Body):
+    ai.add_document_to_kb(body.value)
+    return {"message": "Document uploaded successfully"}
+
+
 @app.post("/chat/{user_id}")
 async def start_conversation(
     user_id: str, chat: ChatRequest, token=Depends(check_bearer_token)
@@ -238,7 +250,7 @@ async def start_conversation(
             detail="Unauthorized",
         )
     conversation_id = str(uuid.uuid4())  # Generate a unique conversation ID
-    await database.db.conversations.insert_one(
+    database.db.conversations.insert_one(
         {
             "user_id": user_id,
             "conversation_id": conversation_id,
