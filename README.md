@@ -6,6 +6,8 @@
 
 ### Batteries Included
 * Provides conversational memory (using Zep and OpenAI), parallel function calling, smart automatic tool choice, and message history using MongoDB
+* Provides Internet search via Perplexity, X search via Grok, and KB via Pinecone and Cohere
+* Login via your Solana wallet via Helius
 * Utilizes FastAPI and Next.js - the most popular and supported web frameworks 
 * Quickly add custom functions to your AI agent in a few lines of code
 
