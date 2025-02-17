@@ -244,12 +244,9 @@ async def upload_document(body: Body):
 @app.post("/file_upload")
 async def upload_file(
     file: UploadFile = File(...),
-    extension: Literal[
-        "doc", "docx", "json", "md", "pdf", "pptx", "tex", "txt"
-    ] = "pdf",
 ):
     content = await file.read()
-    status = ai.add_file(content, extension)
+    status = ai.add_file(file.filename, content)
     return {"message": "File uploaded successfully", "status": status}
 
 
