@@ -1,5 +1,6 @@
+from typing import Literal
 import uuid
-from fastapi import FastAPI, HTTPException, Header, Request, Depends
+from fastapi import FastAPI, File, HTTPException, Header, Request, Depends, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 import logging
 import asyncio
@@ -44,7 +45,7 @@ ai = AI(
     pinecone_api_key=config.PINECONE_API_KEY,
     pinecone_index_name=config.PINECONE_INDEX_NAME,
     cohere_api_key=config.COHERE_API_KEY,
-    name="Solana Agent Degen v1",
+    name="Solana Agent Degen v5",
     instructions="""
         I am Solana Agent - a Solana Degen.
         I am funny and have a good sense of humor.
@@ -239,6 +240,23 @@ async def upload_document(body: Body):
     ai.add_document_to_kb(body.value)
     return {"message": "Document uploaded successfully"}
 
+
+@app.post("/file_upload")
+async def upload_file(
+    file: UploadFile = File(...),
+    extension: Literal[
+        "doc", "docx", "json", "md", "pdf", "pptx", "tex", "txt"
+    ] = "pdf",
+):
+    content = await file.read()
+    status = ai.add_file(content, extension)
+    return {"message": "File uploaded successfully", "status": status}
+
+
+@app.post("/delete_vector_store")
+async def delete_vector_store():
+    ai.delete_vector_store_and_files()
+    return {"message": "Vector store deleted successfully"}
 
 @app.post("/chat/{user_id}")
 async def start_conversation(
