@@ -23,6 +23,8 @@
 * Get and set the PERPLEXITY_API_KEY in the `agent` folder for `.env` file - [Perplexity](https://www.perplexity.ai/)
 * Get and set the GROK_API_KEY in the `agent` folder for the `.env` file - [Grok](https://x.ai/) 
 * Get and set the RPC_URL in the `agent` folder for the `.env` file - [Helius](https://helius.dev)
+* Get and set the PINECONE_API_KEY and PINECONE_INDEX_NAME in the `agent` folder for the `.env` file - [Pinecone](https://pinecone.io)
+* Get and set the COHERE_API_KEY in the `agent` folder for the `.env` file - [Cohere](https://cohere.com)
 * Set all the secrets to match between the `.env` files and make them `uuidv4`s or other strong keys - [UUID Generator](https://www.uuidgenerator.net)
 * Open two terminal windows
 * `Terminal 1`: `cd site && yarn install && yarn dev`
