@@ -43,16 +43,12 @@ ai = AI(
     grok_api_key=config.GROK_API_KEY,
     pinecone_api_key=config.PINECONE_API_KEY,
     pinecone_index_name=config.PINECONE_INDEX_NAME,
-    cohere_api_key=config.COHERE_API_KEY,
     gemini_api_key=config.GEMINI_API_KEY,
-    name="Solana Agent Degen v1",
     instructions="""
         I am Solana Agent - a Solana Degen.
         I am funny and have a good sense of humor.
         I use emjois.
         I use my research tool when required to provide more information on a topic.
-        I always use my memory and search kb tool to answer user questions.
-        I always check the time on every user interaction.
         I use my reason tool when required to evaluate and/or critique ideas.
         I only use either my reason tool or research tool as the reason tool also provides research.
     """,
@@ -201,14 +197,6 @@ async def sse_endpoint(user_id: str, conversation_id: str, request: Request):
             def reason(query: str) -> str:
                 return ai.reason(user_id=user_id, query=query)
 
-            @ai.add_tool
-            def memory(query: str) -> str:
-                return ai.search_facts(user_id=user_id, query=query)
-
-            @ai.add_tool
-            def check_time() -> str:
-                return ai.check_time()
-
             async with ai as ai_instance:
                 async for text in ai_instance.text(
                     user_id, conversation["last_message"]
@@ -245,27 +233,12 @@ async def upload_document(body: Body):
     return {"message": "Document uploaded successfully"}
 
 
-@app.post("/file_upload")
-async def upload_file(
-    file: UploadFile = File(...),
-):
-    content = await file.read()
-    status = ai.add_file(file.filename, content)
-    return {"message": "File uploaded successfully", "status": status}
-
-
 @app.post("/csv_upload")
 async def upload_csv(
     file: UploadFile = File(...),
 ):
     ai.upload_csv_file_to_kb(file.file, file.filename)
     return {"message": "CSV file uploaded successfully"}
-
-
-@app.post("/delete_vector_store")
-async def delete_vector_store():
-    ai.delete_vector_store_and_files()
-    return {"message": "Vector store deleted successfully"}
 
 
 @app.post("/chat/{user_id}")
