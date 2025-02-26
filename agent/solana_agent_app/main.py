@@ -183,8 +183,8 @@ async def sse_endpoint(user_id: str, conversation_id: str, request: Request):
     async def message_producer():
         try:
             @ai.add_tool
-            def get_current_time_in_utc() -> str:
-                return ai.check_time()
+            def get_time(timezone: str) -> str:
+                return ai.check_time(timezone)
 
             @ai.add_tool
             def check_kb(query: str) -> str:
