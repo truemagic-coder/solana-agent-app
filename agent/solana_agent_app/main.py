@@ -196,10 +196,6 @@ async def sse_endpoint(user_id: str, conversation_id: str, request: Request):
                 x_search_results = ai.search_x(query=query)
                 return internet_search_results + x_search_results
 
-            @ai.add_tool
-            def reason(query: str) -> str:
-                return ai.reason(user_id=user_id, query=query)
-
             async with ai as ai_instance:
                 async for text in ai_instance.text(
                     user_id, conversation["last_message"]
