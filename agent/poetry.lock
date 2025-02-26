@@ -1086,13 +1086,13 @@ files = [
 
 [[package]]
 name = "solana-agent"
-version = "4.0.1"
+version = "4.0.2"
 description = "Build self-learning AI Agents"
 optional = false
 python-versions = "<4.0,>=3.9"
 files = [
-    {file = "solana_agent-4.0.1-py3-none-any.whl", hash = "sha256:5f5bf93c80d9eeeeaa3963bb46b69a0389b8e28a12307738a0aac2afe98fe412"},
-    {file = "solana_agent-4.0.1.tar.gz", hash = "sha256:bba50623a80d4a0b2b0b70a30e67aaad33c4847e1e7a298ca5c8d61764cc4a59"},
+    {file = "solana_agent-4.0.2-py3-none-any.whl", hash = "sha256:2ba6d2c0439f7dc26948b6a0dc985c434ff41668ccc619fcbbeac6e0fa26c1d4"},
+    {file = "solana_agent-4.0.2.tar.gz", hash = "sha256:395f136608f51a2dd9f4d83d9d78c65c1c9700431da83f7e56d9627fb11811e8"},
 ]
 
 [package.dependencies]
@@ -1474,4 +1474,4 @@ typing_extensions = ">=4.0.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "3.12.8"
-content-hash = "ba096de46da73f9136154429fb9b14fc6e579581b085e641d11ccb7ac778781d"
+content-hash = "209d43c0d9c5474a01be5bdc7c5e236308098c2b7c8fb6112fdf5670c6444e9f"
