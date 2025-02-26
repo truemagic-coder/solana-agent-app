@@ -182,6 +182,9 @@ async def sse_endpoint(user_id: str, conversation_id: str, request: Request):
 
     async def message_producer():
         try:
+            @ai.add_tool
+            def get_current_time_in_utc() -> str:
+                return ai.check_time()
 
             @ai.add_tool
             def check_kb(query: str) -> str:
@@ -231,7 +234,6 @@ class Body(BaseModel):
 async def upload_document(body: Body):
     ai.add_document_to_kb(body.value)
     return {"message": "Document uploaded successfully"}
-
 
 @app.post("/csv_upload")
 async def upload_csv(
