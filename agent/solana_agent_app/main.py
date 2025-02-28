@@ -1,5 +1,5 @@
 import uuid
-from fastapi import FastAPI, File, HTTPException, Header, Request, Depends, UploadFile
+from fastapi import FastAPI, HTTPException, Header, Request, Depends
 from fastapi.middleware.cors import CORSMiddleware
 import logging
 import asyncio
@@ -8,7 +8,7 @@ import pymongo
 from sse_starlette.sse import EventSourceResponse
 from datetime import datetime as dt
 from solana_agent_app.config import config
-from solana_agent import AI, MongoDatabase
+from solana_agent import AI, MongoDatabase, MultiAgentSystem
 import jwt
 import httpx
 
@@ -35,26 +35,34 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Create the multi-agent system
+system = MultiAgentSystem(database=database)
 
-ai = AI(
-    zep_api_key=config.ZEP_API_KEY,
+# Create specialized agents with very clear boundaries
+finance_agent = AI(
     openai_api_key=config.OPENAI_API_KEY,
-    perplexity_api_key=config.PERPLEXITY_API_KEY,
-    grok_api_key=config.GROK_API_KEY,
-    pinecone_api_key=config.PINECONE_API_KEY,
-    pinecone_index_name=config.PINECONE_INDEX_NAME,
-    gemini_api_key=config.GEMINI_API_KEY,
-    instructions="""
-        I am Solana Agent - a Solana Degen.
-        I am funny and have a good sense of humor.
-        I use emjois.
-        I use my research tool when required to provide more information on a topic.
-        I use my reason tool when required to evaluate and/or critique ideas.
-        I only use either my reason tool or research tool as the reason tool also provides research.
-    """,
+    instructions="""You are a financial expert specializing in Solana DeFi, token economics, and market analysis.""",
     database=database,
 )
 
+developer_agent = AI(
+    openai_api_key=config.OPENAI_API_KEY,
+    instructions="""You are a Solana blockchain developer specializing in Rust programming, smart contracts, and technical implementation.
+    You provide detailed code examples and technical explanations.""",
+    database=database,
+)
+# Register agents with very explicit specialization descriptions
+system.register(
+    name="finance", 
+    agent=finance_agent, 
+    specialization="Financial expert for Solana token economics and DeFi - NO programming or technical implementation expertise"
+)
+
+system.register(
+    name="developer", 
+    agent=developer_agent, 
+    specialization="Technical expert for Solana development, Rust programming, and code implementation - NO financial expertise"
+)
 
 async def check_bearer_token(authorization: str = Header(...)):
     # get bearer token from header
@@ -182,35 +190,20 @@ async def sse_endpoint(user_id: str, conversation_id: str, request: Request):
 
     async def message_producer():
         try:
-            @ai.add_tool
-            def get_time(timezone: str) -> str:
-                return ai.check_time(timezone)
+            async for text in system.process(
+                user_id, conversation["last_message"]
+            ):
+                await queue.put({"event": "message", "data": text})
+                await asyncio.sleep(0.1)  # Small delay to ensure chunked response
 
-            @ai.add_tool
-            def check_kb(query: str) -> str:
-                return ai.search_kb(query=query)
+            # Send a close event
+            await queue.put({"event": "close", "data": ""})
 
-            @ai.add_tool
-            def research(query: str) -> str:
-                internet_search_results = ai.search_internet(query=query)
-                x_search_results = ai.search_x(query=query)
-                return internet_search_results + x_search_results
-
-            async with ai as ai_instance:
-                async for text in ai_instance.text(
-                    user_id, conversation["last_message"]
-                ):
-                    await queue.put({"event": "message", "data": text})
-                    await asyncio.sleep(0.1)  # Small delay to ensure chunked response
-
-                # Send a close event
-                await queue.put({"event": "close", "data": ""})
-
-                # Update conversation status to "completed" in MongoDB
-                database.db.conversations.update_one(
-                    {"user_id": user_id, "conversation_id": conversation_id},
-                    {"$set": {"status": "completed"}},
-                )
+            # Update conversation status to "completed" in MongoDB
+            database.db.conversations.update_one(
+                {"user_id": user_id, "conversation_id": conversation_id},
+                {"$set": {"status": "completed"}},
+            )
         except Exception as e:
             logger.error(f"Error in message producer: {str(e)}")
             await queue.put({"event": "error", "data": str(e)})
@@ -224,19 +217,6 @@ async def sse_endpoint(user_id: str, conversation_id: str, request: Request):
 
 class Body(BaseModel):
     value: str
-
-
-@app.post("/kb_upload")
-async def upload_document(body: Body):
-    ai.add_document_to_kb(body.value)
-    return {"message": "Document uploaded successfully"}
-
-@app.post("/csv_upload")
-async def upload_csv(
-    file: UploadFile = File(...),
-):
-    ai.upload_csv_file_to_kb(file.file, file.filename)
-    return {"message": "CSV file uploaded successfully"}
 
 
 @app.post("/chat/{user_id}")

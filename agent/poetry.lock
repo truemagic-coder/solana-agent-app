@@ -202,18 +202,18 @@ wmi = ["wmi (>=1.5.1)"]
 
 [[package]]
 name = "fastapi"
-version = "0.115.8"
+version = "0.115.10"
 description = "FastAPI framework, high performance, easy to learn, fast to code, ready for production"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "fastapi-0.115.8-py3-none-any.whl", hash = "sha256:753a96dd7e036b34eeef8babdfcfe3f28ff79648f86551eb36bfc1b0bf4a8cbf"},
-    {file = "fastapi-0.115.8.tar.gz", hash = "sha256:0ce9111231720190473e222cdf0f07f7206ad7e53ea02beb1d2dc36e2f0741e9"},
+    {file = "fastapi-0.115.10-py3-none-any.whl", hash = "sha256:47346c5437e933e68909a835cf63890a9bd52fb6091b2499b996c08a01ca43a5"},
+    {file = "fastapi-0.115.10.tar.gz", hash = "sha256:920cdc95c1c6ca073656deae80ad254512d131031c2d7759c87ae469572911ee"},
 ]
 
 [package.dependencies]
 pydantic = ">=1.7.4,<1.8 || >1.8,<1.8.1 || >1.8.1,<2.0.0 || >2.0.0,<2.0.1 || >2.0.1,<2.1.0 || >2.1.0,<3.0.0"
-starlette = ">=0.40.0,<0.46.0"
+starlette = ">=0.40.0,<0.47.0"
 typing-extensions = ">=4.8.0"
 
 [package.extras]
@@ -552,13 +552,13 @@ files = [
 
 [[package]]
 name = "openai"
-version = "1.64.0"
+version = "1.65.1"
 description = "The official Python library for the openai API"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "openai-1.64.0-py3-none-any.whl", hash = "sha256:20f85cde9e95e9fbb416e3cb5a6d3119c0b28308afd6e3cc47bf100623dac623"},
-    {file = "openai-1.64.0.tar.gz", hash = "sha256:2861053538704d61340da56e2f176853d19f1dc5704bc306b7597155f850d57a"},
+    {file = "openai-1.65.1-py3-none-any.whl", hash = "sha256:396652a6452dd42791b3ad8a3aab09b1feb7c1c4550a672586fb300760a8e204"},
+    {file = "openai-1.65.1.tar.gz", hash = "sha256:9d9370a20d2b8c3ce319fd2194c2eef5eab59effbcc5b04ff480977edc530fba"},
 ]
 
 [package.dependencies]
@@ -1086,25 +1086,27 @@ files = [
 
 [[package]]
 name = "solana-agent"
-version = "4.0.2"
+version = "5.0.0-dev17"
 description = "Build self-learning AI Agents"
 optional = false
-python-versions = "<4.0,>=3.9"
-files = [
-    {file = "solana_agent-4.0.2-py3-none-any.whl", hash = "sha256:2ba6d2c0439f7dc26948b6a0dc985c434ff41668ccc619fcbbeac6e0fa26c1d4"},
-    {file = "solana_agent-4.0.2.tar.gz", hash = "sha256:395f136608f51a2dd9f4d83d9d78c65c1c9700431da83f7e56d9627fb11811e8"},
-]
+python-versions = ">=3.9,<4.0"
+files = []
+develop = false
 
 [package.dependencies]
-ntplib = ">=0.4.0,<0.5.0"
-openai = ">=1.64.0,<2.0.0"
-pandas = ">=2.2.3,<3.0.0"
-pinecone = ">=6.0.1,<7.0.0"
-pydantic = ">=2.10.6,<3.0.0"
-pymongo = ">=4.11.1,<5.0.0"
-requests = ">=2.32.3,<3.0.0"
-zep-cloud = ">=2.4.0,<3.0.0"
-zep-python = ">=2.0.2,<3.0.0"
+ntplib = "^0.4.0"
+openai = "^1.65.1"
+pandas = "^2.2.3"
+pinecone = "^6.0.1"
+pydantic = "^2.10.6"
+pymongo = "^4.11.1"
+requests = "^2.32.3"
+zep-cloud = "^2.4.0"
+zep-python = "^2.0.2"
+
+[package.source]
+type = "directory"
+url = "../../solana-agent"
 
 [[package]]
 name = "sse-starlette"
@@ -1127,13 +1129,13 @@ uvicorn = ["uvicorn (>=0.34.0)"]
 
 [[package]]
 name = "starlette"
-version = "0.45.3"
+version = "0.46.0"
 description = "The little ASGI library that shines."
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "starlette-0.45.3-py3-none-any.whl", hash = "sha256:dfb6d332576f136ec740296c7e8bb8c8a7125044e7c6da30744718880cdd059d"},
-    {file = "starlette-0.45.3.tar.gz", hash = "sha256:2cbcba2a75806f8a41c722141486f37c28e30a0921c5f6fe4346cb0dcee1302f"},
+    {file = "starlette-0.46.0-py3-none-any.whl", hash = "sha256:913f0798bd90ba90a9156383bcf1350a17d6259451d0d8ee27fc0cf2db609038"},
+    {file = "starlette-0.46.0.tar.gz", hash = "sha256:b359e4567456b28d473d0193f34c0de0ed49710d75ef183a74a5ce0499324f50"},
 ]
 
 [package.dependencies]
@@ -1474,4 +1476,4 @@ typing_extensions = ">=4.0.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "3.12.8"
-content-hash = "209d43c0d9c5474a01be5bdc7c5e236308098c2b7c8fb6112fdf5670c6444e9f"
+content-hash = "75f9088e901d322f46036d2166fdf3069e84896b45a75df5ddbeac434984781a"
