@@ -35,7 +35,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Create the multi-agent system
+# Create the Swarm object with the MongoDB database
 swarm = Swarm(database=database)
 
 # Create specialized agents with very clear boundaries
