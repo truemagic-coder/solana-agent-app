@@ -8,7 +8,7 @@ import pymongo
 from sse_starlette.sse import EventSourceResponse
 from datetime import datetime as dt
 from solana_agent_app.config import config
-from solana_agent import AI, MongoDatabase, MultiAgentSystem
+from solana_agent import AI, MongoDatabase, Swarm
 import jwt
 import httpx
 
@@ -36,7 +36,7 @@ app.add_middleware(
 )
 
 # Create the multi-agent system
-system = MultiAgentSystem(database=database)
+swarm = Swarm(database=database)
 
 # Create specialized agents with very clear boundaries
 finance_agent = AI(
@@ -54,13 +54,13 @@ developer_agent = AI(
     database=database,
 )
 # Register agents with very explicit specialization descriptions
-system.register(
+swarm.register(
     name="finance", 
     agent=finance_agent, 
     specialization="Financial expert for Solana token economics and DeFi - NO programming or technical implementation expertise"
 )
 
-system.register(
+swarm.register(
     name="developer", 
     agent=developer_agent, 
     specialization="Technical expert for Solana development, Rust programming, and code implementation - NO financial expertise"
@@ -192,7 +192,7 @@ async def sse_endpoint(user_id: str, conversation_id: str, request: Request):
 
     async def message_producer():
         try:
-            async for text in system.process(
+            async for text in swarm.process(
                 user_id, conversation["last_message"]
             ):
                 await queue.put({"event": "message", "data": text})
