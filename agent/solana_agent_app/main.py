@@ -41,12 +41,14 @@ system = MultiAgentSystem(database=database)
 # Create specialized agents with very clear boundaries
 finance_agent = AI(
     openai_api_key=config.OPENAI_API_KEY,
+    zep_api_key=config.ZEP_API_KEY,
     instructions="""You are a financial expert specializing in Solana DeFi, token economics, and market analysis.""",
     database=database,
 )
 
 developer_agent = AI(
     openai_api_key=config.OPENAI_API_KEY,
+    zep_api_key=config.ZEP_API_KEY,
     instructions="""You are a Solana blockchain developer specializing in Rust programming, smart contracts, and technical implementation.
     You provide detailed code examples and technical explanations.""",
     database=database,

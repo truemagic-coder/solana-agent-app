@@ -98,6 +98,7 @@ function External() {
   const { connected, publicKey } = useWallet();
   const [eventSource, setEventSource] = useState<EventSource | null>(null);
   const { data: session, status } = useSession();
+  const [userScrolledUp, setUserScrolledUp] = useState(false);
 
   const {
     chatHistory,
@@ -121,7 +122,14 @@ function External() {
     const container = chatContainerRef.current;
     if (container) {
       const { scrollTop, scrollHeight, clientHeight } = container;
-      setShouldAutoScroll(scrollHeight - scrollTop - clientHeight < 200);
+      const isAtBottom = scrollHeight - scrollTop - clientHeight < 200;
+
+      // If user scrolls up during streaming, mark it
+      if (isStreaming && !isAtBottom) {
+        setUserScrolledUp(true);
+      }
+
+      setShouldAutoScroll(isAtBottom);
     }
   };
 
@@ -131,13 +139,21 @@ function External() {
       container.addEventListener('scroll', handleScroll);
       return () => container.removeEventListener('scroll', handleScroll);
     }
-  }, []);
+  }, [isStreaming]); // Add isStreaming as dependency
 
   useEffect(() => {
-    if (shouldAutoScroll && chatContainerRef.current) {
+    // Only auto-scroll if shouldAutoScroll is true AND not during streaming with manual scroll up
+    if (shouldAutoScroll && !(isStreaming && userScrolledUp) && chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
-  }, [sortedChatHistory, shouldAutoScroll]);
+  }, [sortedChatHistory, shouldAutoScroll, userScrolledUp, isStreaming]);
+
+  // Reset userScrolledUp when streaming ends
+  useEffect(() => {
+    if (!isStreaming) {
+      setUserScrolledUp(false);
+    }
+  }, [isStreaming]);
 
   useEffect(() => {
     if (publicKey && chatHistory.data.length === 0 && session) {
@@ -160,6 +176,10 @@ function External() {
     }
 
     if (!message.trim() || !connected) return;
+
+    // Reset scroll state when sending a new message
+    setShouldAutoScroll(true);
+    setUserScrolledUp(false);
 
     const currentMessage = message;
     setMessage('');
@@ -274,13 +294,16 @@ function External() {
           <CustomMarkdown>{processedText(item.message)}</CustomMarkdown>
         </div>
       </div>
-      <div className={`p-3 rounded-lg mt-2 bg-purple-800 break-words ${isLast && isStreaming && !item.response ? 'min-h-[100px]' : ''}`}>
-        <p className="font-bold mb-1">Agent</p>
+      <div className={`p-4 rounded-lg mt-2 bg-purple-800 break-words transition-all duration-200 ${
+        isLast && isStreaming ? 'min-h-[120px]' : 'min-h-[60px]'
+      }`}
+      >
+        <p className="font-bold mb-2">Agent</p>
         <div className="text-white prose prose-invert max-w-none overflow-wrap-anywhere">
           {item.response ? (
             <CustomMarkdown>{processedText(item.response)}</CustomMarkdown>
           ) : (
-            <div className="flex items-center">
+            <div className="flex items-center py-2">
               <Loader2 className="h-4 w-4 animate-spin mr-2" />
               <span>Generating response...</span>
             </div>
