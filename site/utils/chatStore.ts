@@ -44,6 +44,7 @@ interface ChatStore {
   setCurrentPage: (page: number) => void;
   initialFetchDone: boolean;
   setInitialFetchDone: (done: boolean) => void;
+  loadingPages: Record<number, boolean>;
 }
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL as string;
@@ -61,8 +62,20 @@ export const useChatStore = create<ChatStore>()(
     agentVerifiedLoading: false,
     agentVerifiedError: false,
     currentPage: 1,
+    loadingPages: {},
     fetchData: async (userId: string, jwt: string, pageNumber: number) => {
-      set({ fetchLoading: true, fetchError: false });
+      // Check if this page is already being loaded
+      if (get().loadingPages[pageNumber]) {
+        return;
+      }
+
+      // Mark this page as loading
+      set((state) => ({
+        loadingPages: { ...state.loadingPages, [pageNumber]: true },
+        fetchLoading: true,
+        fetchError: false,
+      }));
+
       try {
         const response = await axios.get<ChatHistory>(`${BASE_URL}/history/${userId}?page_num=${pageNumber}&page_size=10`, {
           headers: {
@@ -71,16 +84,28 @@ export const useChatStore = create<ChatStore>()(
             Accept: 'application/json',
           },
         });
+
+        // Handle empty response
         if (response.data.data.length === 0) {
-          set({ allDataFetched: true });
-          set({ initialFetchDone: true });
-          set({ fetchLoading: false });
+          set({
+            allDataFetched: true,
+            initialFetchDone: true,
+            fetchLoading: false,
+            loadingPages: { ...get().loadingPages, [pageNumber]: false },
+          });
           return;
         }
+
         set((state) => {
           const newData = response.data.data;
-          const combinedData = [...newData, ...state.chatHistory.data];
+          const existingIds = new Set(state.chatHistory.data.map((msg) => msg.id));
+
+          // Filter out duplicates to avoid re-adding existing messages
+          const uniqueNewData = newData.filter((msg) => !existingIds.has(msg.id));
+
+          const combinedData = [...uniqueNewData, ...state.chatHistory.data];
           const sortedData = combinedData.sort((a, b) => b.timestamp - a.timestamp);
+
           return {
             chatHistory: {
               ...response.data,
@@ -88,13 +113,21 @@ export const useChatStore = create<ChatStore>()(
             },
             currentPage: pageNumber,
             allDataFetched: newData.length === 0 || pageNumber >= response.data.total_pages,
+            initialFetchDone: true,
+            loadingPages: { ...state.loadingPages, [pageNumber]: false },
           };
         });
       } catch (err) {
-        set({ fetchError: true });
+        set((state) => ({
+          fetchError: true,
+          loadingPages: { ...state.loadingPages, [pageNumber]: false },
+        }));
         console.error(err);
       } finally {
-        set({ fetchLoading: false });
+        set((state) => ({
+          fetchLoading: false,
+          loadingPages: { ...state.loadingPages, [pageNumber]: false },
+        }));
       }
     },
     agentCheck: async (userId: string, jwt: string) => {

@@ -202,13 +202,13 @@ wmi = ["wmi (>=1.5.1)"]
 
 [[package]]
 name = "fastapi"
-version = "0.115.10"
+version = "0.115.11"
 description = "FastAPI framework, high performance, easy to learn, fast to code, ready for production"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "fastapi-0.115.10-py3-none-any.whl", hash = "sha256:47346c5437e933e68909a835cf63890a9bd52fb6091b2499b996c08a01ca43a5"},
-    {file = "fastapi-0.115.10.tar.gz", hash = "sha256:920cdc95c1c6ca073656deae80ad254512d131031c2d7759c87ae469572911ee"},
+    {file = "fastapi-0.115.11-py3-none-any.whl", hash = "sha256:32e1541b7b74602e4ef4a0260ecaf3aadf9d4f19590bba3e1bf2ac4666aa2c64"},
+    {file = "fastapi-0.115.11.tar.gz", hash = "sha256:cc81f03f688678b92600a65a5e618b93592c65005db37157147204d8924bf94f"},
 ]
 
 [package.dependencies]
@@ -552,13 +552,13 @@ files = [
 
 [[package]]
 name = "openai"
-version = "1.65.1"
+version = "1.65.2"
 description = "The official Python library for the openai API"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "openai-1.65.1-py3-none-any.whl", hash = "sha256:396652a6452dd42791b3ad8a3aab09b1feb7c1c4550a672586fb300760a8e204"},
-    {file = "openai-1.65.1.tar.gz", hash = "sha256:9d9370a20d2b8c3ce319fd2194c2eef5eab59effbcc5b04ff480977edc530fba"},
+    {file = "openai-1.65.2-py3-none-any.whl", hash = "sha256:27d9fe8de876e31394c2553c4e6226378b6ed85e480f586ccfe25b7193fb1750"},
+    {file = "openai-1.65.2.tar.gz", hash = "sha256:729623efc3fd91c956f35dd387fa5c718edd528c4bed9f00b40ef290200fb2ce"},
 ]
 
 [package.dependencies]
@@ -1086,18 +1086,18 @@ files = [
 
 [[package]]
 name = "solana-agent"
-version = "6.0.0"
-description = "Build self-learning AI Agents"
+version = "7.0.0"
+description = "The first AGI framework"
 optional = false
 python-versions = "<4.0,>=3.9"
 files = [
-    {file = "solana_agent-6.0.0-py3-none-any.whl", hash = "sha256:2acdf8af57850a8c0baf8a6d6e03445929e5d351eef93c6e93749d1558a02b4c"},
-    {file = "solana_agent-6.0.0.tar.gz", hash = "sha256:0568faa19fa19ea0bf510dc622de4e4985cc8f102625346c33117cfa7598a5d1"},
+    {file = "solana_agent-7.0.0-py3-none-any.whl", hash = "sha256:b73790bb371dfb6d9b80136b28cdc9d06489eec6c23c9ba9744d0fa732e95f20"},
+    {file = "solana_agent-7.0.0.tar.gz", hash = "sha256:896bba7a26c2687bc366914af2e3fd3deea3c9834ebf1dd72d8ccb0ea904dcec"},
 ]
 
 [package.dependencies]
 ntplib = ">=0.4.0,<0.5.0"
-openai = ">=1.65.1,<2.0.0"
+openai = ">=1.65.2,<2.0.0"
 pandas = ">=2.2.3,<3.0.0"
 pinecone = ">=6.0.1,<7.0.0"
 pydantic = ">=2.10.6,<3.0.0"
@@ -1474,4 +1474,4 @@ typing_extensions = ">=4.0.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "3.12.8"
-content-hash = "b7a80e30e09f74ece83ca41349c0aa11bf3d376b593612ff401175ba32972d01"
+content-hash = "5a921677bf5d06513e9ca973b8d8a6e35bbff3195d4227c0f83087493cf0811a"

@@ -108,6 +108,8 @@ function External() {
     updateLastMessage,
     allDataFetched,
     fetchError,
+    initialFetchDone,
+    currentPage,
   } = useChatStore();
 
   const sortedChatHistory = useMemo(
@@ -156,10 +158,10 @@ function External() {
   }, [isStreaming]);
 
   useEffect(() => {
-    if (publicKey && chatHistory.data.length === 0 && session) {
+    if (publicKey && chatHistory.data.length === 0 && session && !fetchLoading && !initialFetchDone) {
       fetchData(publicKey.toBase58(), session.user?.name as string, 1);
     }
-  }, [publicKey, session]);
+  }, [publicKey, session, chatHistory.data.length, fetchLoading, initialFetchDone]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
@@ -313,10 +315,12 @@ function External() {
     </div>
   ));
 
-  const loadMoreData = (page: number) => {
-    if (allDataFetched) return;
+  const loadMoreData = () => {
+    if (allDataFetched || fetchLoading) return;
 
-    fetchData(publicKey?.toBase58() || '', session?.user?.name || '', page + 1);
+    // Get the next page to fetch
+    const nextPage = currentPage + 1;
+    fetchData(publicKey?.toBase58() || '', session?.user?.name || '', nextPage);
   };
 
   const hasMore = !allDataFetched;
@@ -347,8 +351,9 @@ function External() {
             <InfiniteScroll
               loadMore={loadMoreData}
               isReverse
-              hasMore={hasMore}
+              hasMore={hasMore && !fetchLoading}
               initialLoad={false}
+              threshold={100}
             >
               {sortedChatHistory.map((item, index) => (
                 <ChatRow

@@ -16,9 +16,6 @@ import httpx
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-database = MongoDatabase(config.MONGO_URL, config.MONGO_DB)
-
-
 class ChatRequest(BaseModel):
     text: str
 
@@ -35,36 +32,49 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# create a MongoDB database object
+database = MongoDatabase(config.MONGO_URL, config.MONGO_DB)
+
 # Create the Swarm object with the MongoDB database
-swarm = Swarm(database=database)
+swarm = Swarm(
+    database=database,
+    directive="You are a Solana consulting service specializing in DeFi, token economics, and development. You provide expert advice and guidance to clients.",
+)
 
 # Create specialized agents with very clear boundaries
 finance_agent = AI(
     openai_api_key=config.OPENAI_API_KEY,
     zep_api_key=config.ZEP_API_KEY,
-    instructions="""You are a financial expert specializing in Solana DeFi, token economics, and market analysis.""",
+    perplexity_api_key=config.PERPLEXITY_API_KEY,
+    pinecone_api_key=config.PINECONE_API_KEY,
+    pinecone_index_name=config.PINECONE_INDEX_NAME,
+    instructions="You are a financial expert specializing in Solana DeFi, token economics, and market analysis.",
     database=database,
 )
 
 developer_agent = AI(
     openai_api_key=config.OPENAI_API_KEY,
     zep_api_key=config.ZEP_API_KEY,
-    instructions="""You are a Solana blockchain developer specializing in Rust programming, smart contracts, and technical implementation.
-    You provide detailed code examples and technical explanations.""",
+    perplexity_api_key=config.PERPLEXITY_API_KEY,
+    pinecone_api_key=config.PINECONE_API_KEY,
+    pinecone_index_name=config.PINECONE_INDEX_NAME,
+    instructions="You are a Solana blockchain developer specializing in Rust programming, smart contracts, and technical implementation.",
     database=database,
 )
+
 # Register agents with very explicit specialization descriptions
 swarm.register(
-    name="finance", 
-    agent=finance_agent, 
-    specialization="Financial expert for Solana token economics and DeFi - NO programming or technical implementation expertise"
+    name="finance",
+    agent=finance_agent,
+    specialization="Financial expert for Solana token economics and DeFi.",
 )
 
 swarm.register(
-    name="developer", 
-    agent=developer_agent, 
-    specialization="Technical expert for Solana development, Rust programming, and code implementation - NO financial expertise"
+    name="developer",
+    agent=developer_agent,
+    specialization="Technical expert for Solana development, Rust programming, and code implementation.",
 )
+
 
 async def check_bearer_token(authorization: str = Header(...)):
     # get bearer token from header
@@ -192,9 +202,7 @@ async def sse_endpoint(user_id: str, conversation_id: str, request: Request):
 
     async def message_producer():
         try:
-            async for text in swarm.process(
-                user_id, conversation["last_message"]
-            ):
+            async for text in swarm.process(user_id, conversation["last_message"], timezone="America/Vancouver"):
                 await queue.put({"event": "message", "data": text})
                 await asyncio.sleep(0.1)  # Small delay to ensure chunked response
 
