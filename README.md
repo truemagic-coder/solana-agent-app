@@ -35,15 +35,6 @@
 * Add your proper remotes in each folder locally (each folder `site` and `agent` should be their own repos - `git init`)
 * For each folder (`site` and `agent`) git commit and git push to the main branch
 
-## Advanced Topics
-
-### Agent Functions
-* Use expressive snake-case names for the functions with expressive param names (if required)
-* Functions only take `str` params and must output a `str` (string)
-* Functions must be fully sync - you cannot use async libraries or methods - example: using `requests` not `httpx` (sync vs async)
-* Don't make tool outputs (strings) too large as when calling multiple calls in parallel has a size limit (combined)
-* Keep in mind the 128k model token input limit when processing data especially from APIs
-
 ## Solana Agent AI Framework
 * [Solana Agent](https://github.com/truemagic-coder/solana-agent)
 
