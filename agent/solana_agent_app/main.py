@@ -21,6 +21,9 @@ config = {
         "api_key": app_config.PINECONE_API_KEY,
         "index": app_config.PINECONE_INDEX_NAME,
     },
+    "zep": {
+        "api_key": app_config.ZEP_API_KEY,
+    },
     "plugins_dir": "plugins",
     "ai_agents": [
         {
@@ -43,28 +46,6 @@ solana_agent = SolanaAgent(config=config)
 # Initialize logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
-async def check_and_broadcast_surveys(user_id):
-    """Check for new surveys and broadcast them to active connections."""
-    try:
-        # Use the new method to get pending surveys
-        surveys = await solana_agent.get_pending_surveys(user_id)
-        
-        # Broadcast each found survey to all user's active connections
-        for survey in surveys:
-            if user_id in manager.active_connections:
-                survey_message = json.dumps({
-                    "type": "system_message",
-                    "content": "How was your experience with the assistant?",
-                    "survey_id": survey.get("survey_id"),
-                    "message_id": survey.get("_id")  # Survey ID in MongoDB
-                })
-                
-                logger.info(f"Broadcasting survey {survey.get('survey_id')} to user {user_id}")
-                await manager.broadcast_to_user(survey_message, user_id)
-    
-    except Exception as e:
-        logger.error(f"Error checking for surveys: {str(e)}", exc_info=True)
 
 
 async def check_bearer_token(authorization: str = Header(...)):
@@ -205,7 +186,7 @@ async def verify_token(websocket: WebSocket) -> Dict[str, Any]:
     except jwt.PyJWTError as e:
         await websocket.close(code=status.WS_1008_POLICY_VIOLATION, reason=f"Invalid token: {str(e)}")
         return None
-    except Exception as e:
+    except Exception:
         await websocket.close(code=status.WS_1008_POLICY_VIOLATION, reason="Authentication failed")
         return None
 
@@ -233,7 +214,6 @@ async def websocket_chat(websocket: WebSocket):
             try:
                 message_data = json.loads(data)
                 user_message = message_data.get("message", "")
-                timezone = message_data.get("timezone")
                 
                 # Store the complete response to save in database
                 full_response = ""
@@ -252,8 +232,6 @@ async def websocket_chat(websocket: WebSocket):
                         }), 
                         websocket
                     )
-
-                await check_and_broadcast_surveys(user_id)
                 
                 # Signal end of message
                 await manager.send_message(
