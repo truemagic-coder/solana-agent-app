@@ -1,0 +1,21 @@
+server:
+  host: 0.0.0.0
+  port: 8000
+
+datastore:
+  type: postgres
+  postgres:
+    dsn: "postgres://postgres:postgres@db:5432/postgres?sslmode=disable"
+  
+extractors:
+  entityextractor:
+    autorun: false
+  summaryextractor:
+    autorun: false
+  documentwindow:
+    autorun: false
+  questionextractor:
+    autorun: false
+
+rag:
+  service_url: "http://graphiti:8003"
