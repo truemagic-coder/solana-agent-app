@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "solana_agent_app"
+version = "0.0.1"
+description = ""
+authors = ["Bevan Hunt <bevan@bevanhunt.com>"]
+packages = [{include = "solana_agent_app"}]
+
+[tool.poetry.dependencies]
+python = "3.12.8"
+fastapi = "^0.115.8"
+uvicorn = {version = "^0.34.0", extras = ["standard"]}
+gunicorn = "^23.0.0"
+python-dotenv = "^1.0.1"
+pydantic = "*"
+motor = "^3.7.0"
+solana-agent = "^10.0.0"
+pyjwt = "^2.10.1"
+requests = "^2.32.3"
+httpx = "^0.28.1"
+websockets = "^15.0.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
