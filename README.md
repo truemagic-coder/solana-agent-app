@@ -2,14 +2,10 @@
 
 [![Solana Agent](https://dl.walletbubbles.com/solana-agent-logo.png?width=200)](https://solana-agent.com)
 
-## Why Solana Agent App
-
-### Batteries Included
-* Provides conversational memory (using Zep and OpenAI), parallel function calling, smart automatic tool choice, and message history using MongoDB
-* Provides Internet search via Perplexity, X search via Grok, and KB via Pinecone and Cohere
+## Batteries Included
+* Provides a sample and working implementation for Solana Agent
 * Login via your Solana wallet via Helius
 * Utilizes FastAPI and Next.js - the most popular and supported web frameworks 
-* Quickly add custom functions to your AI agent in a few lines of code
 
 ## Local Dev
 
@@ -22,11 +18,8 @@
 * Rename `.env.sample` to `.env` in `site` and `agent`
 * Get and set the OPENAI_API_KEY var in the `agent` folder for `.env` file - [OpenAI API Keys](https://platform.openai.com/api-keys)
 * Get and set the ZEP_API_KEY in the `agent` folder for `.env` file - [Zep](https://getzep.com)
-* Get and set the PERPLEXITY_API_KEY in the `agent` folder for `.env` file - [Perplexity](https://www.perplexity.ai/)
-* Get and set the GROK_API_KEY in the `agent` folder for the `.env` file - [Grok](https://x.ai/) 
 * Get and set the RPC_URL in the `agent` folder for the `.env` file - [Helius](https://helius.dev)
 * Get and set the PINECONE_API_KEY and PINECONE_INDEX_NAME in the `agent` folder for the `.env` file - [Pinecone](https://pinecone.io)
-* Get and set the GEMINI_API_KEY in the `agent` folder for the `.env` file - [Gemini](https://ai.google.dev/aistudio)
 * Set all the secrets to match between the `.env` files and make them `uuidv4`s or other strong keys - [UUID Generator](https://www.uuidgenerator.net)
 * Open two terminal windows
 * `Terminal 1`: `cd site && yarn install && yarn dev`
