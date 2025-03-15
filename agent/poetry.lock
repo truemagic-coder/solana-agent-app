@@ -718,13 +718,13 @@ files = [
 
 [[package]]
 name = "openai"
-version = "1.66.2"
+version = "1.66.3"
 description = "The official Python library for the openai API"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "openai-1.66.2-py3-none-any.whl", hash = "sha256:75194057ee6bb8b732526387b6041327a05656d976fc21c064e21c8ac6b07999"},
-    {file = "openai-1.66.2.tar.gz", hash = "sha256:9b3a843c25f81ee09b6469d483d9fba779d5c6ea41861180772f043481b0598d"},
+    {file = "openai-1.66.3-py3-none-any.whl", hash = "sha256:a427c920f727711877ab17c11b95f1230b27767ba7a01e5b66102945141ceca9"},
+    {file = "openai-1.66.3.tar.gz", hash = "sha256:8dde3aebe2d081258d4159c4cb27bdc13b5bb3f7ea2201d9bd940b9a89faf0c9"},
 ]
 
 [package.dependencies]
@@ -836,13 +836,13 @@ xml = ["lxml (>=4.9.2)"]
 
 [[package]]
 name = "pinecone"
-version = "6.0.1"
+version = "6.0.2"
 description = "Pinecone client and SDK"
 optional = false
 python-versions = "<4.0,>=3.9"
 files = [
-    {file = "pinecone-6.0.1-py3-none-any.whl", hash = "sha256:9088c6fc85bc1d70b259b108c59df2b3687a82da491123be8f3c7dfef051ada8"},
-    {file = "pinecone-6.0.1.tar.gz", hash = "sha256:2fbca13153d32d1a012a12eb10472bd5dbb645be8e441381ad88349d8b2198bb"},
+    {file = "pinecone-6.0.2-py3-none-any.whl", hash = "sha256:a85fa36d7d1451e7b7563ccfc7e3e2dadd39b33e5d53b2882468db8514ab8847"},
+    {file = "pinecone-6.0.2.tar.gz", hash = "sha256:9c2e74be8b3abe76909da9b4dae61bced49aade51f6fc39b87edb97a1f8df0e4"},
 ]
 
 [package.dependencies]
@@ -1306,6 +1306,21 @@ socks = ["PySocks (>=1.5.6,!=1.5.7)"]
 use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
+name = "sakit"
+version = "1.0.0"
+description = "Solana Agent Kit"
+optional = false
+python-versions = "<4.0,>=3.12"
+files = [
+    {file = "sakit-1.0.0-py3-none-any.whl", hash = "sha256:b6ad85a0ca6ee6b6e4c4bb1dd6a428dca50666a5b0d0ef06821a66537ccf06a6"},
+    {file = "sakit-1.0.0.tar.gz", hash = "sha256:c1c3bb1eb3ae92a371bfb5c5c62363d6511da9502b5eb11bc2f7034ad0ec38f7"},
+]
+
+[package.dependencies]
+requests = ">=2.32.3,<3.0.0"
+solana-agent = ">=12.0.0,<13.0.0"
+
+[[package]]
 name = "setuptools"
 version = "76.0.0"
 description = "Easily download, build, install, upgrade, and uninstall Python packages"
@@ -1349,25 +1364,25 @@ files = [
 
 [[package]]
 name = "solana-agent"
-version = "11.2.0"
+version = "12.0.0"
 description = "The Future of Work"
 optional = false
 python-versions = "<4.0,>=3.12"
 files = [
-    {file = "solana_agent-11.2.0-py3-none-any.whl", hash = "sha256:5bc05bd67e15931d69534ddb97c38e46221a5ff3ad533aea982f64992a9bc736"},
-    {file = "solana_agent-11.2.0.tar.gz", hash = "sha256:31acd60f63a0f1a779806d875f4c6e596e117f57d05133d100a0805e79988d3a"},
+    {file = "solana_agent-12.0.0-py3-none-any.whl", hash = "sha256:fb5df0a0febe7a96c464ab74d515d8258a07655d3da3cc042438cb61fca6624a"},
+    {file = "solana_agent-12.0.0.tar.gz", hash = "sha256:25cc4ac2bada6c6721a14aa9673eca4a9f65e7bfc891f7c5cbe2828a8e1bf39c"},
 ]
 
 [package.dependencies]
 ntplib = ">=0.4.0,<0.5.0"
-openai = ">=1.66.2,<2.0.0"
+openai = ">=1.66.3,<2.0.0"
 pandas = ">=2.2.3,<3.0.0"
-pinecone = ">=6.0.1,<7.0.0"
+pinecone = ">=6.0.2,<7.0.0"
 pydantic = ">=2.10.6,<3.0.0"
 pymongo = ">=4.11.2,<5.0.0"
 qdrant-client = ">=1.13.3,<2.0.0"
 requests = ">=2.32.3,<3.0.0"
-zep-cloud = ">=2.6.1,<3.0.0"
+zep-cloud = ">=2.7.0,<3.0.0"
 zep-python = ">=2.0.2,<3.0.0"
 
 [[package]]
@@ -1686,13 +1701,13 @@ files = [
 
 [[package]]
 name = "zep-cloud"
-version = "2.6.1"
+version = "2.7.0"
 description = ""
 optional = false
 python-versions = "<4.0,>=3.9.0"
 files = [
-    {file = "zep_cloud-2.6.1-py3-none-any.whl", hash = "sha256:52cf59fb30ae46aeeb92a126b11c93992525c2bc8c3d7f2bb67216cebbe9e385"},
-    {file = "zep_cloud-2.6.1.tar.gz", hash = "sha256:8cdc2e4f58cf752f33fc07d5b0552e266a3dcba9781a15be9bde94c03bf1d0b6"},
+    {file = "zep_cloud-2.7.0-py3-none-any.whl", hash = "sha256:ebb9a340939ded1055b821ed4c31b98d1e525d93e9b00864747829e8ec371fa3"},
+    {file = "zep_cloud-2.7.0.tar.gz", hash = "sha256:62af22e2ba64d978cd2a4e29813c363f3746ca78fa4612051bfbfb26a9f1faa7"},
 ]
 
 [package.dependencies]
@@ -1719,4 +1734,4 @@ typing_extensions = ">=4.0.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "3.12.8"
-content-hash = "1b1fde59455fea3285cfacf336fac010307a147a4796df06ca2ef443ce6be126"
+content-hash = "fe8837ac963ef59526c7c378d9f7a80fdbbd6acf3a3cb60079393790cc000b97"
