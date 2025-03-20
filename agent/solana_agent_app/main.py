@@ -17,28 +17,21 @@ config = {
     "openai": {
         "api_key": app_config.OPENAI_API_KEY,
     },
-    "pinecone": {
-        "api_key": app_config.PINECONE_API_KEY,
-        "index": app_config.PINECONE_INDEX_NAME,
-    },
     "zep": {
         "api_key": app_config.ZEP_API_KEY,
     },
-    "perplexity_api_key": app_config.PERPLEXITY_API_KEY,
     "ai_agents": [
         {
             "name": "financial_expert",
             "instructions": "You are a financial expert specializing in Solana DeFi, token economics, and market analysis.",
             "specialization": "Financial expert for Solana token economics and DeFi",
             "model": "gpt-4o-mini",
-            "tools": ["search_internet"]
         },
         {
             "name": "solana_developer",
             "instructions": "You are a Solana blockchain developer specializing in Rust programming, smart contracts, and technical implementation.",
             "specialization": "Technical expert for Solana development, Rust programming, and code implementation.",
             "model": "gpt-4o-mini",
-            "tools": ["search_internet"]
         },
     ]
 }
@@ -127,7 +120,7 @@ async def history(
 
     try:
         # Use the new method to get paginated history
-        result = await solana_agent.get_paginated_history(user_id, page_num, page_size)
+        result = await solana_agent.get_user_history(user_id, page_num, page_size)
         return result
     except Exception as e:
         logger.error(f"Error fetching history: {str(e)}", exc_info=True)
