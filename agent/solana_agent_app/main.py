@@ -20,7 +20,7 @@ config = {
     "zep": {
         "api_key": app_config.ZEP_API_KEY,
     },
-    "ai_agents": [
+    "agents": [
         {
             "name": "financial_expert",
             "instructions": "You are a financial expert specializing in Solana DeFi, token economics, and market analysis.",
