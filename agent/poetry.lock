@@ -814,13 +814,13 @@ use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
 name = "sakit"
-version = "4.0.0"
+version = "4.0.1"
 description = "Solana Agent Kit"
 optional = false
 python-versions = "<4.0,>=3.12"
 files = [
-    {file = "sakit-4.0.0-py3-none-any.whl", hash = "sha256:b95e5881f6d8143ed56696e54c9fd49538cfa9c10e14f374e523351a136a015e"},
-    {file = "sakit-4.0.0.tar.gz", hash = "sha256:d72e534549b798d24f9b394b2751246c24e20d4d39c96c5a0617492a25f1d06f"},
+    {file = "sakit-4.0.1-py3-none-any.whl", hash = "sha256:e2266fe2659e6550803833db391dfaa3d486198c40a2a3167e62827ee155d6c0"},
+    {file = "sakit-4.0.1.tar.gz", hash = "sha256:5768e50d2ecbd716922c858dcd5a4a0ce40f9e6aaacea26c032d6631cb160496"},
 ]
 
 [package.dependencies]
@@ -840,13 +840,13 @@ files = [
 
 [[package]]
 name = "solana-agent"
-version = "17.0.4"
+version = "17.0.5"
 description = "The Future of Work"
 optional = false
 python-versions = "<4.0,>=3.12"
 files = [
-    {file = "solana_agent-17.0.4-py3-none-any.whl", hash = "sha256:0b2879bbf90f9b2660ab32a6d91e20469d80b8a923f811fab30dcc8499977438"},
-    {file = "solana_agent-17.0.4.tar.gz", hash = "sha256:03ed4e72af79917671ddeffb4de6410f2ea84dea4090b44d0ab0cdd672f3a3a5"},
+    {file = "solana_agent-17.0.5-py3-none-any.whl", hash = "sha256:8288d2ee3ea743d4241e0b0c98818059f21b45abcce90245bb2db47092992605"},
+    {file = "solana_agent-17.0.5.tar.gz", hash = "sha256:d4fd56816eeeabe702de6cd0a31a9db98ec973c980ee74bfa92aaf92ee7eac66"},
 ]
 
 [package.dependencies]
@@ -1194,4 +1194,4 @@ typing_extensions = ">=4.0.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "3.13.2"
-content-hash = "26ead63e59c8f7342874177d0b21939f6e723cc06fa928def25ef9b5e87462f7"
+content-hash = "b18a687c5ccaaa1a846d55b8cf5e1cfe5a152583fe619f71a10e7dbe1994e348"
