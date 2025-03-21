@@ -814,13 +814,13 @@ use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
 name = "sakit"
-version = "4.0.1"
+version = "4.0.2"
 description = "Solana Agent Kit"
 optional = false
 python-versions = "<4.0,>=3.12"
 files = [
-    {file = "sakit-4.0.1-py3-none-any.whl", hash = "sha256:e2266fe2659e6550803833db391dfaa3d486198c40a2a3167e62827ee155d6c0"},
-    {file = "sakit-4.0.1.tar.gz", hash = "sha256:5768e50d2ecbd716922c858dcd5a4a0ce40f9e6aaacea26c032d6631cb160496"},
+    {file = "sakit-4.0.2-py3-none-any.whl", hash = "sha256:66dae57461e55b83060cbea88cb57a62e41030db8eb4929f6aa2c7f202bfb545"},
+    {file = "sakit-4.0.2.tar.gz", hash = "sha256:32d1e54a0a27566488422f0d757a25144c1363e7459050cb30de863381d98d9e"},
 ]
 
 [package.dependencies]
@@ -1194,4 +1194,4 @@ typing_extensions = ">=4.0.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "3.13.2"
-content-hash = "b18a687c5ccaaa1a846d55b8cf5e1cfe5a152583fe619f71a10e7dbe1994e348"
+content-hash = "b58002a07506179913295c018f24036807068269a1a397de8ab97e1468655c6f"
