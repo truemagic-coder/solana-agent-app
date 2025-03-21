@@ -1005,13 +1005,13 @@ files = [
 
 [[package]]
 name = "solana-agent"
-version = "14.0.2"
+version = "15.0.0"
 description = "The Future of Work"
 optional = false
 python-versions = "<4.0,>=3.12"
 files = [
-    {file = "solana_agent-14.0.2-py3-none-any.whl", hash = "sha256:6061fd10dc15340a56813ae5de63fa6aa6881211d0c424b0d2c6bad91234a0d4"},
-    {file = "solana_agent-14.0.2.tar.gz", hash = "sha256:797468ec75b81309ff22f883212e0f471bfb61822e4484431acfb39dd6ce3d45"},
+    {file = "solana_agent-15.0.0-py3-none-any.whl", hash = "sha256:f62fe432b9974219f9193bdc7bb4cde5c4e3757413a17b85395f4e8272bb65c2"},
+    {file = "solana_agent-15.0.0.tar.gz", hash = "sha256:672341e1136dc3c51027d0815228a2dd6a6da5744df47d2d09abd7ca1ab7942b"},
 ]
 
 [package.dependencies]
@@ -1379,4 +1379,4 @@ typing_extensions = ">=4.0.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "3.12.8"
-content-hash = "29530c14c3fa1ec5ff4544eefd5d458a28a9fa05d418ca676ed384e0b70cfab3"
+content-hash = "510320ad9bc0b29e541ac1761d0f85138db67e02cdc8a14e762b0d65d58b0c7a"

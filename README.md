@@ -12,7 +12,7 @@
 ###  Run locally on Mac or Linux
 * Clone this repo - `git clone https://github.com/truemagic-coder/solana-agent-app`
 * Ensure the latest LTS Node is installed with yarn
-* Ensure Python 3.12.8 is installed with poetry
+* Ensure Python 3.13.2 is installed with poetry
 * Ensure Docker and Docker Compose are installed
 * `docker-compose up -d`
 * Rename `.env.sample` to `.env` in `site` and `agent`
