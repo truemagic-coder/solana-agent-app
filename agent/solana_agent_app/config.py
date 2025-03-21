@@ -11,7 +11,7 @@ class Config:
     NEXTAUTH_URL = os.getenv("NEXTAUTH_URL")
     MONGO_DB = os.getenv("MONGO_DB")
     ZEP_API_KEY = os.getenv("ZEP_API_KEY")
-    HELIUS_RPC_URL = os.getenv("HELIUS_RPC_URL")
+    RPC_URL = os.getenv("RPC_URL")
 
 
 config = Config()

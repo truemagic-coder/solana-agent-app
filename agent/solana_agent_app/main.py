@@ -85,7 +85,7 @@ async def handler_rpc_post(request: Request):
         async with httpx.AsyncClient() as client:
             response = await client.request(
                 method=request.method,
-                url=app_config.RPC_URL,  # Replace with the actual API URL
+                url=app_config.RPC_URL,
                 json=data,
                 headers={"Content-Type": "application/json"},
             )
@@ -100,7 +100,7 @@ async def handler_rpc_get(request: Request):
         async with httpx.AsyncClient() as client:
             response = await client.request(
                 method=request.method,
-                url=app_config.RPC_URL,  # Replace with the actual API URL
+                url=app_config.RPC_URL, 
                 headers={"Content-Type": "application/json"},
             )
         return response.json()
