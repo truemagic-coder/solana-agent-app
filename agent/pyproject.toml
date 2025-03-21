@@ -11,7 +11,7 @@ fastapi = "^0.115.8"
 uvicorn = {version = "^0.34.0", extras = ["standard"]}
 gunicorn = "^23.0.0"
 python-dotenv = "^1.0.1"
-solana-agent = "^16.0.0"
+solana-agent = "^17.0.0"
 pyjwt = "^2.10.1"
 requests = "^2.32.3"
 httpx = "^0.28.1"
