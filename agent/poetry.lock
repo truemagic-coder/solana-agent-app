@@ -968,6 +968,21 @@ socks = ["PySocks (>=1.5.6,!=1.5.7)"]
 use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
+name = "sakit"
+version = "4.0.0"
+description = "Solana Agent Kit"
+optional = false
+python-versions = "<4.0,>=3.12"
+files = [
+    {file = "sakit-4.0.0-py3-none-any.whl", hash = "sha256:b95e5881f6d8143ed56696e54c9fd49538cfa9c10e14f374e523351a136a015e"},
+    {file = "sakit-4.0.0.tar.gz", hash = "sha256:d72e534549b798d24f9b394b2751246c24e20d4d39c96c5a0617492a25f1d06f"},
+]
+
+[package.dependencies]
+requests = ">=2.32.3,<3.0.0"
+solana-agent = ">=17"
+
+[[package]]
 name = "sniffio"
 version = "1.3.1"
 description = "Sniff out which async library your code is running under"
@@ -980,13 +995,13 @@ files = [
 
 [[package]]
 name = "solana-agent"
-version = "17.0.0"
+version = "17.0.2"
 description = "The Future of Work"
 optional = false
 python-versions = "<4.0,>=3.12"
 files = [
-    {file = "solana_agent-17.0.0-py3-none-any.whl", hash = "sha256:b67b8d5aca8bd12c33b888922310b6c86c2fe170a0828a9589b4592548291eae"},
-    {file = "solana_agent-17.0.0.tar.gz", hash = "sha256:2561cb4a16c65126cfe341b905f84dd3fe58c3eff351df867e80fa20177d9f17"},
+    {file = "solana_agent-17.0.2-py3-none-any.whl", hash = "sha256:20ce579d8f8847ffdef83f25ea29ee47e5eaa2465898922c67cc97dcabbeb54e"},
+    {file = "solana_agent-17.0.2.tar.gz", hash = "sha256:e0978c4ade28b4efdbe57de19ecc9c0002dbdecc76f9f12daa1dfd32d6f149a3"},
 ]
 
 [package.dependencies]
@@ -1354,4 +1369,4 @@ typing_extensions = ">=4.0.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "3.13.2"
-content-hash = "029cc6238ac87481639d42c232bb8d26b70287edfd4aeae7b548c111af7180de"
+content-hash = "fbcc7af0e56f3cf1e3cd16c3d8daf5ab95f22c39dec54592b79931b818896ca7"

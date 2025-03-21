@@ -20,16 +20,23 @@ config = {
     "zep": {
         "api_key": app_config.ZEP_API_KEY,
     },
+    "tools": {
+        "search_internet": {
+            "api_key": app_config.PERPLEXITY_API_KEY,
+        },
+    },
     "agents": [
         {
             "name": "financial_expert",
             "instructions": "You are a financial expert specializing in Solana DeFi, token economics, and market analysis.",
             "specialization": "Financial expert for Solana token economics and DeFi",
+            "tools": ["search_internet"],
         },
         {
             "name": "solana_developer",
             "instructions": "You are a Solana blockchain developer specializing in Rust programming, smart contracts, and technical implementation.",
             "specialization": "Technical expert for Solana development, Rust programming, and code implementation.",
+            "tools": ["search_internet"],
         },
     ]
 }
