@@ -35,7 +35,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "event-source-polyfill": "^1.0.31",
-    "framer-motion": "^11.3.4",
+    "framer-motion": "^12.5.0",
     "helius-sdk": "^1.4.1",
     "jsonwebtoken": "^9.0.2",
     "katex": "^0.16.11",

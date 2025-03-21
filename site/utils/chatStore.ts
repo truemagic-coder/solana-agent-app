@@ -53,7 +53,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL as string;
 export const useChatStore = create<ChatStore>()(
   (set, get) => ({
     chatHistory: {
-      data: [], total: 0, page: 1, page_size: 0, total_pages: 0,
+      data: [], total: 0, page: 1, page_size: 0, total_pages: 1,
     },
     allDataFetched: false,
     fetchLoading: false,
@@ -110,7 +110,7 @@ export const useChatStore = create<ChatStore>()(
           // Filter out duplicates to avoid re-adding existing messages
           const uniqueNewData = newData.filter((msg) => !existingIds.has(msg.id));
 
-          const combinedData = [...uniqueNewData, ...state.chatHistory.data];
+          const combinedData = [...state.chatHistory.data, ...uniqueNewData];
           const sortedData = combinedData.sort((a, b) => a.timestamp - b.timestamp);
 
           return {
@@ -119,7 +119,7 @@ export const useChatStore = create<ChatStore>()(
               data: sortedData,
             },
             currentPage: pageNumber,
-            allDataFetched: newData.length === 0 || pageNumber >= response.data.total_pages,
+            allDataFetched: pageNumber >= response.data.total_pages,
             initialFetchDone: true,
             loadingPages: { ...state.loadingPages, [pageNumber]: false },
           };

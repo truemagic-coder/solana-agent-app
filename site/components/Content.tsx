@@ -16,6 +16,7 @@
 
 import React, {
   useState, useEffect, useRef,
+  useMemo,
 } from 'react';
 import { Loader2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
@@ -32,6 +33,7 @@ import Link from 'next/link';
 import { useWallet } from '@solana/wallet-adapter-react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { visit } from 'unist-util-visit';
+import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import { useChatStore } from '../utils/chatStore';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -42,6 +44,27 @@ import '@jup-ag/terminal/css';
 
 // Import KaTeX CSS
 import 'katex/dist/katex.min.css';
+
+const messageVariants = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      duration: 0.2,
+      ease: 'easeOut',
+      staggerChildren: 0.1, // Add stagger effect for children
+      delayChildren: 0.1, // Slight delay before starting children animations
+    },
+  },
+  exit: {
+    opacity: 0,
+    transition: {
+      duration: 0.15,
+    },
+  },
+};
 
 interface ChatMessage {
   id: string;
@@ -100,6 +123,8 @@ function External() {
   const { data: session, status } = useSession();
   const [userScrolledUp, setUserScrolledUp] = useState(false);
   const [connectionError, setConnectionError] = useState<string | null>(null);
+  const [isLoadingOldMessages, setIsLoadingOldMessages] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   const {
     chatHistory,
@@ -108,13 +133,61 @@ function External() {
     addMessage,
     updateLastMessage,
     allDataFetched,
-    fetchError,
     initialFetchDone,
     currentPage,
   } = useChatStore();
 
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const [shouldAutoScroll, setShouldAutoScroll] = useState(true);
+
+  const hasMore = useMemo(() => {
+    // Don't show hasMore until we have initial data
+    if (!initialFetchDone) return false;
+
+    const result = !allDataFetched
+                   && currentPage < chatHistory.total_pages
+                   && !fetchLoading;
+
+    console.log('hasMore calculation:', {
+      initialFetchDone,
+      allDataFetched,
+      currentPage,
+      totalPages: chatHistory.total_pages,
+      fetchLoading,
+      result,
+    });
+
+    return result;
+  }, [allDataFetched, currentPage, chatHistory.total_pages, fetchLoading, initialFetchDone]);
+
+  const loadMoreData = () => {
+    if (!initialFetchDone || allDataFetched || fetchLoading || isLoadingOldMessages) {
+      return;
+    }
+
+    const container = chatContainerRef.current;
+    const scrollPosition = container?.scrollHeight;
+
+    setIsLoadingOldMessages(true);
+    const nextPage = currentPage + 1;
+
+    if (nextPage <= chatHistory.total_pages) {
+      console.log('Fetching page:', nextPage);
+      fetchData(publicKey?.toBase58() || '', session?.user?.name || '', nextPage)
+        .finally(() => {
+          if (container && scrollPosition) {
+            // Use Framer Motion's sophisticated animation system
+            const newScrollTop = container.scrollHeight - scrollPosition;
+            if (!isInitialLoad) {
+              container.scrollTop = newScrollTop;
+            }
+          }
+          setIsLoadingOldMessages(false);
+        });
+    } else {
+      setIsLoadingOldMessages(false);
+    }
+  };
 
   // Handle WebSocket connection
   useEffect(() => {
@@ -186,35 +259,42 @@ function External() {
     };
   }, [publicKey, session, status]);
 
-  const handleScroll = () => {
-    const container = chatContainerRef.current;
-    if (container) {
-      const { scrollTop, scrollHeight, clientHeight } = container;
-      const isAtBottom = scrollHeight - scrollTop - clientHeight < 200;
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      // Auto-scroll in these cases:
+      // 1. Initial load
+      // 2. New message is added (not loading old messages)
+      // 3. User is at bottom
+      // 4. Not currently streaming or user hasn't scrolled up
+      const shouldScroll = (isInitialLoad && initialFetchDone)
+                          || (shouldAutoScroll
+                           && !(isStreaming && userScrolledUp)
+                           && !isLoadingOldMessages);
 
-      // If user scrolls up during streaming, mark it
-      if (isStreaming && !isAtBottom) {
-        setUserScrolledUp(true);
+      console.log('Scroll check:', {
+        isInitialLoad,
+        initialFetchDone,
+        shouldAutoScroll,
+        isStreaming,
+        userScrolledUp,
+        isLoadingOldMessages,
+        willScroll: shouldScroll,
+      });
+
+      if (shouldScroll) {
+        chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+        if (isInitialLoad && initialFetchDone) {
+          setIsInitialLoad(false);
+        }
       }
-
-      setShouldAutoScroll(isAtBottom);
     }
-  };
-
-  useEffect(() => {
-    const container = chatContainerRef.current;
-    if (container) {
-      container.addEventListener('scroll', handleScroll);
-      return () => container.removeEventListener('scroll', handleScroll);
-    }
-  }, [isStreaming]);
-
-  useEffect(() => {
-    // Only auto-scroll if shouldAutoScroll is true AND not during streaming with manual scroll up
-    if (shouldAutoScroll && !(isStreaming && userScrolledUp) && chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-    }
-  }, [chatHistory.data, shouldAutoScroll, userScrolledUp, isStreaming]);
+  }, [
+    isStreaming,
+    shouldAutoScroll,
+    userScrolledUp,
+    isInitialLoad,
+    initialFetchDone,
+  ]);
 
   // Reset userScrolledUp when streaming ends
   useEffect(() => {
@@ -252,6 +332,7 @@ function External() {
     // Reset scroll state when sending a new message
     setShouldAutoScroll(true);
     setUserScrolledUp(false);
+    setIsLoadingOldMessages(false); // Ensure we're not in loading state for new messages
 
     const currentMessage = message;
     setMessage('');
@@ -327,41 +408,37 @@ function External() {
   );
 
   const ChatRow = React.memo(({ item, isLast }: { item: ChatMessage; isLast: boolean }) => (
-    <div className="bg-gray-800 p-4 rounded-lg mb-4 max-w-full">
-      <div className="p-3 rounded-lg mb-2 bg-blue-400 break-words">
-        <p className="font-bold mb-1">You</p>
-        <div className="text-white prose prose-invert max-w-none overflow-wrap-anywhere">
-          <CustomMarkdown>{processedText(item.user_message)}</CustomMarkdown>
+    <motion.div
+      variants={messageVariants} // Now this will be orchestrated by the parent
+      className="bg-gray-800 p-4 rounded-lg mb-4 max-w-full"
+    >
+      <div className="bg-gray-800 p-4 rounded-lg mb-4 max-w-full">
+        <div className="p-3 rounded-lg mb-2 bg-blue-400 break-words">
+          <p className="font-bold mb-1">You</p>
+          <div className="text-white prose prose-invert max-w-none overflow-wrap-anywhere">
+            <CustomMarkdown>{processedText(item.user_message)}</CustomMarkdown>
+          </div>
+        </div>
+        <div
+          className={`p-4 rounded-lg mt-2 bg-purple-800 break-words transition-all duration-200 ${
+            isLast && isStreaming ? 'min-h-[120px]' : 'min-h-[60px]'
+          }`}
+        >
+          <p className="font-bold mb-2">Agent</p>
+          <div className="text-white prose prose-invert max-w-none overflow-wrap-anywhere">
+            {item.assistant_message ? (
+              <CustomMarkdown>{processedText(item.assistant_message)}</CustomMarkdown>
+            ) : (
+              <div className="flex items-center py-2">
+                <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                <span>Generating response...</span>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-      <div className={`p-4 rounded-lg mt-2 bg-purple-800 break-words transition-all duration-200 ${
-        isLast && isStreaming ? 'min-h-[120px]' : 'min-h-[60px]'
-      }`}
-      >
-        <p className="font-bold mb-2">Agent</p>
-        <div className="text-white prose prose-invert max-w-none overflow-wrap-anywhere">
-          {item.assistant_message ? (
-            <CustomMarkdown>{processedText(item.assistant_message)}</CustomMarkdown>
-          ) : (
-            <div className="flex items-center py-2">
-              <Loader2 className="h-4 w-4 animate-spin mr-2" />
-              <span>Generating response...</span>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
+    </motion.div>
   ));
-
-  const loadMoreData = () => {
-    if (allDataFetched || fetchLoading) return;
-
-    // Get the next page to fetch
-    const nextPage = currentPage + 1;
-    fetchData(publicKey?.toBase58() || '', session?.user?.name || '', nextPage);
-  };
-
-  const hasMore = !allDataFetched;
 
   return (
     <div className="h-screen bg-gray-900 text-white flex flex-col relative">
@@ -394,27 +471,52 @@ function External() {
         </div>
       )}
 
-      {(status === 'authenticated') && (!fetchLoading && !fetchError) ? (
+      {(status === 'authenticated') ? (
         <div className="flex flex-col flex-grow px-4 pb-5" style={{ height: 'calc(100vh - 150px)' }}>
           <div
             ref={chatContainerRef}
             className="flex-grow w-full bg-gray-800 p-4 rounded-lg mb-4 overflow-y-auto"
           >
-            <InfiniteScroll
-              loadMore={loadMoreData}
-              isReverse
-              hasMore={hasMore && !fetchLoading}
-              initialLoad={false}
-              threshold={100}
-            >
-              {chatHistory.data.map((item, index) => (
-                <ChatRow
-                  key={`${item.id}+${index}`}
-                  item={item}
-                  isLast={index === chatHistory.data.length - 1}
-                />
-              ))}
-            </InfiniteScroll>
+            <LayoutGroup>
+              <AnimatePresence mode="popLayout">
+                <InfiniteScroll
+                  loadMore={loadMoreData}
+                  isReverse
+                  hasMore={hasMore}
+                  initialLoad={false}
+                  useWindow={false}
+                  threshold={250}
+                  getScrollParent={() => chatContainerRef.current as HTMLElement}
+                  loader={(
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      key="loader"
+                      className="text-center py-4"
+                    >
+                      <Loader2 className="h-6 w-6 animate-spin mx-auto" />
+                    </motion.div>
+                  )}
+                >
+                  <motion.div
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    variants={messageVariants}
+                  >
+                    {chatHistory.data.map((item, index) => (
+                      <ChatRow
+                        key={item.id}
+                        item={item}
+                        isLast={index === chatHistory.data.length - 1}
+                      />
+                    ))}
+                  </motion.div>
+                </InfiniteScroll>
+              </AnimatePresence>
+            </LayoutGroup>
           </div>
           <form onSubmit={handleMessageSubmit} className="flex w-full">
             <Input
