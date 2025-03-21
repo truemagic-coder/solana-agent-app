@@ -25,7 +25,6 @@ files = [
 [package.dependencies]
 idna = ">=2.8"
 sniffio = ">=1.1"
-typing_extensions = {version = ">=4.5", markers = "python_version < \"3.13\""}
 
 [package.extras]
 doc = ["Sphinx (>=8.2,<9.0)", "packaging", "sphinx-autodoc-typehints (>=1.2.0)", "sphinx_rtd_theme"]
@@ -1005,13 +1004,13 @@ files = [
 
 [[package]]
 name = "solana-agent"
-version = "15.0.0"
+version = "15.1.0"
 description = "The Future of Work"
 optional = false
 python-versions = "<4.0,>=3.12"
 files = [
-    {file = "solana_agent-15.0.0-py3-none-any.whl", hash = "sha256:f62fe432b9974219f9193bdc7bb4cde5c4e3757413a17b85395f4e8272bb65c2"},
-    {file = "solana_agent-15.0.0.tar.gz", hash = "sha256:672341e1136dc3c51027d0815228a2dd6a6da5744df47d2d09abd7ca1ab7942b"},
+    {file = "solana_agent-15.1.0-py3-none-any.whl", hash = "sha256:c3db77c3831e5b587e9a025ed4b0a7c20b308ad72fa25a0b2dd74789d3b9f902"},
+    {file = "solana_agent-15.1.0.tar.gz", hash = "sha256:bae191572513b1f2bb5786fc9d12e7f1b52596cbfccf36f9c9f8279301cfc0ce"},
 ]
 
 [package.dependencies]
@@ -1378,5 +1377,5 @@ typing_extensions = ">=4.0.0"
 
 [metadata]
 lock-version = "2.0"
-python-versions = "3.12.8"
-content-hash = "510320ad9bc0b29e541ac1761d0f85138db67e02cdc8a14e762b0d65d58b0c7a"
+python-versions = "3.13.2"
+content-hash = "a41b95bb952a2ad00fe779e9eeb44982bd6a3ca9c4831cc476f3b2b675fef34d"
