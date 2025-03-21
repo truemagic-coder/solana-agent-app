@@ -48,20 +48,20 @@ import 'katex/dist/katex.min.css';
 const messageVariants = {
   initial: {
     opacity: 0,
+    y: 20,
   },
   animate: {
     opacity: 1,
+    y: 0,
     transition: {
-      duration: 0.2,
+      duration: 0.3,
       ease: 'easeOut',
-      staggerChildren: 0.1, // Add stagger effect for children
-      delayChildren: 0.1, // Slight delay before starting children animations
     },
   },
   exit: {
     opacity: 0,
     transition: {
-      duration: 0.15,
+      duration: 0.2,
     },
   },
 };
@@ -294,6 +294,7 @@ function External() {
     userScrolledUp,
     isInitialLoad,
     initialFetchDone,
+    chatHistory.data,
   ]);
 
   // Reset userScrolledUp when streaming ends
@@ -409,17 +410,24 @@ function External() {
 
   const ChatRow = React.memo(({ item, isLast }: { item: ChatMessage; isLast: boolean }) => (
     <motion.div
-      variants={messageVariants} // Now this will be orchestrated by the parent
+      layout="position"
+      initial={false}
+      animate={false}
+      variants={messageVariants}
       className="bg-gray-800 p-4 rounded-lg mb-4 max-w-full"
     >
       <div className="bg-gray-800 p-4 rounded-lg mb-4 max-w-full">
-        <div className="p-3 rounded-lg mb-2 bg-blue-400 break-words">
+        <motion.div
+          layout="preserve-aspect"
+          className="p-3 rounded-lg mb-2 bg-blue-400 break-words"
+        >
           <p className="font-bold mb-1">You</p>
           <div className="text-white prose prose-invert max-w-none overflow-wrap-anywhere">
             <CustomMarkdown>{processedText(item.user_message)}</CustomMarkdown>
           </div>
-        </div>
-        <div
+        </motion.div>
+        <motion.div
+          layout="preserve-aspect"
           className={`p-4 rounded-lg mt-2 bg-purple-800 break-words transition-all duration-200 ${
             isLast && isStreaming ? 'min-h-[120px]' : 'min-h-[60px]'
           }`}
@@ -435,7 +443,7 @@ function External() {
               </div>
             )}
           </div>
-        </div>
+        </motion.div>
       </div>
     </motion.div>
   ));
