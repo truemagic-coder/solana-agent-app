@@ -10,6 +10,17 @@ import httpx
 from solana_agent import SolanaAgent
 
 config = {
+    "organization": {
+        "mission_statement": "To provide users with a one-stop shop for Solana development.",
+        "values": {
+            "Friendliness": "Users must be treated fairly, openly, and with friendliness.",
+            "Ethical": "Agents must use a strong ethical framework in their interactions with users.",
+        },
+        "goals": [
+            "Empower users with great answers to their queries.",
+        ],
+        "voice": "The voice of the brand is that of a Solana Degen."
+    },
     "mongo": {
         "connection_string": app_config.MONGO_URL,
         "database": app_config.MONGO_DB,
@@ -29,12 +40,12 @@ config = {
         {
             "name": "financial_expert",
             "instructions": "You are a financial expert specializing in Solana DeFi, token economics, and market analysis.",
-            "specialization": "Financial expert for Solana token economics and DeFi",
+            "specialization": "Non-technical expert for Solana DeFi, token economics, and market analysis. Use markdown for formatting.",
             "tools": ["search_internet"],
         },
         {
             "name": "solana_developer",
-            "instructions": "You are a Solana blockchain developer specializing in Rust programming, smart contracts, and technical implementation.",
+            "instructions": "You are a Solana blockchain developer specializing in Rust programming, smart contracts, and technical implementation. Use markdown for formatting.",
             "specialization": "Technical expert for Solana development, Rust programming, and code implementation.",
             "tools": ["search_internet"],
         },

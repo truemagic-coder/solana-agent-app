@@ -717,13 +717,13 @@ zstd = ["zstandard"]
 
 [[package]]
 name = "python-dotenv"
-version = "1.0.1"
+version = "1.1.0"
 description = "Read key-value pairs from a .env file and set them as environment variables"
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.9"
 files = [
-    {file = "python-dotenv-1.0.1.tar.gz", hash = "sha256:e324ee90a023d808f1959c46bcbc04446a10ced277783dc6ee09987c37ec10ca"},
-    {file = "python_dotenv-1.0.1-py3-none-any.whl", hash = "sha256:f7b63ef50f1b690dddf550d03497b66d609393b40b564ed0d674909a68ebf16a"},
+    {file = "python_dotenv-1.1.0-py3-none-any.whl", hash = "sha256:d7c01d9e2293916c18baf562d95698754b0dbbb5e74d457c45d4f6561fb9d55d"},
+    {file = "python_dotenv-1.1.0.tar.gz", hash = "sha256:41f90bc6f5f177fb41f53e87666db362025010eb28f60a01c9143bfa33a2b2d5"},
 ]
 
 [package.extras]
@@ -840,13 +840,13 @@ files = [
 
 [[package]]
 name = "solana-agent"
-version = "17.1.6"
+version = "17.1.10"
 description = "Agentic IQ"
 optional = false
 python-versions = "<4.0,>=3.12"
 files = [
-    {file = "solana_agent-17.1.6-py3-none-any.whl", hash = "sha256:6617912fb1dcad266d3d06d18c7e1d06d4f05cc7c8e3cc831e4705a440a977e2"},
-    {file = "solana_agent-17.1.6.tar.gz", hash = "sha256:99c34233f236793f8c85ec28b8987ed4fe3688d33c54e67a8421d2b1a47c18c0"},
+    {file = "solana_agent-17.1.10-py3-none-any.whl", hash = "sha256:78629705b0a4bbfda6f27a78592a2cbeec64043501392a772961733886eb7384"},
+    {file = "solana_agent-17.1.10.tar.gz", hash = "sha256:215ebf3507696ad661e13ce2898e19d8b876904da042a2631d3ecddc8bcf4ce5"},
 ]
 
 [package.dependencies]
@@ -1194,4 +1194,4 @@ typing_extensions = ">=4.0.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "3.13.2"
-content-hash = "c8ed177bda9f2111aadbdb6b0206c12c8c47109b692ec29f0a27d365e5659ff9"
+content-hash = "2885dca4fca7f9d62bca8c413d9a502df49e5b92aeabb6a58367d4d93ea41ce2"
