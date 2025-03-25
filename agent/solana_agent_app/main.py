@@ -10,8 +10,8 @@ import httpx
 from solana_agent import SolanaAgent
 
 config = {
-    "organization": {
-        "mission_statement": "To provide users with a one-stop shop for Solana development.",
+    "business": {
+        "mission": "To provide users with a one-stop shop for Solana development.",
         "values": {
             "Friendliness": "Users must be treated fairly, openly, and with friendliness.",
             "Ethical": "Agents must use a strong ethical framework in their interactions with users.",
