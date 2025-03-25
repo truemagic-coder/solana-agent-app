@@ -814,18 +814,18 @@ use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
 name = "sakit"
-version = "4.0.2"
+version = "5.0.0"
 description = "Solana Agent Kit"
 optional = false
 python-versions = "<4.0,>=3.12"
 files = [
-    {file = "sakit-4.0.2-py3-none-any.whl", hash = "sha256:66dae57461e55b83060cbea88cb57a62e41030db8eb4929f6aa2c7f202bfb545"},
-    {file = "sakit-4.0.2.tar.gz", hash = "sha256:32d1e54a0a27566488422f0d757a25144c1363e7459050cb30de863381d98d9e"},
+    {file = "sakit-5.0.0-py3-none-any.whl", hash = "sha256:6f698453b6871062f4e6ab167987ba392f4aa9d0da0fa75b6b8a3c6c256333fb"},
+    {file = "sakit-5.0.0.tar.gz", hash = "sha256:1ee362cd988795d41d41abcc3d5d4bb097d5396cb4e09be794d1b1052bde0aed"},
 ]
 
 [package.dependencies]
 requests = ">=2.32.3,<3.0.0"
-solana-agent = ">=17"
+solana-agent = ">=18"
 
 [[package]]
 name = "sniffio"
@@ -840,13 +840,13 @@ files = [
 
 [[package]]
 name = "solana-agent"
-version = "17.1.10"
+version = "18.0.0"
 description = "Agentic IQ"
 optional = false
 python-versions = "<4.0,>=3.12"
 files = [
-    {file = "solana_agent-17.1.10-py3-none-any.whl", hash = "sha256:78629705b0a4bbfda6f27a78592a2cbeec64043501392a772961733886eb7384"},
-    {file = "solana_agent-17.1.10.tar.gz", hash = "sha256:215ebf3507696ad661e13ce2898e19d8b876904da042a2631d3ecddc8bcf4ce5"},
+    {file = "solana_agent-18.0.0-py3-none-any.whl", hash = "sha256:b378a083a705e215490e78135d37e76055353f7ce75a404710e7e8166cec82bb"},
+    {file = "solana_agent-18.0.0.tar.gz", hash = "sha256:74aad2c41cbb560dbddf7ce94dc01f7d3b0c948419b0b189e3b275c6b23630f5"},
 ]
 
 [package.dependencies]
@@ -1194,4 +1194,4 @@ typing_extensions = ">=4.0.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "3.13.2"
-content-hash = "2885dca4fca7f9d62bca8c413d9a502df49e5b92aeabb6a58367d4d93ea41ce2"
+content-hash = "1dc1f7cf4d0a4c9591144b4450359b1137ee70cb9b55ce9f700bece5854876d8"
