@@ -868,14 +868,14 @@ files = [
 
 [[package]]
 name = "solana-agent"
-version = "20.1.0"
+version = "20.1.1"
 description = "Agentic IQ"
 optional = false
 python-versions = "<4.0,>=3.12"
 groups = ["main"]
 files = [
-    {file = "solana_agent-20.1.0-py3-none-any.whl", hash = "sha256:2d5ba134d209b43848b56890c4c16c12349c416ce8a0998e0b37c81aaccb4577"},
-    {file = "solana_agent-20.1.0.tar.gz", hash = "sha256:c2e34f6aa0990f8ba3d1aa4ef64f65a0cfb296f44b8a5ab389ac64977cffebc6"},
+    {file = "solana_agent-20.1.1-py3-none-any.whl", hash = "sha256:a76587457e21748591ac3bbb84bb8acf25f69845a8b947aef354dd84431023f0"},
+    {file = "solana_agent-20.1.1.tar.gz", hash = "sha256:73efc7b77f0e9a21ca0d5997125bb50f206b9a97432933fc3b1d45d16c74962e"},
 ]
 
 [package.dependencies]
@@ -1249,4 +1249,4 @@ typing_extensions = ">=4.0.0"
 [metadata]
 lock-version = "2.1"
 python-versions = "3.13.2"
-content-hash = "471cc9710f553f3dccf5824f10ef63b2eacb105cdccbcd8fc6adfafcc0565664"
+content-hash = "821490887904b269023b9543d4627002b8ecbe175cd27f11d75610dc69da014e"
