@@ -21,12 +21,12 @@ config = {
         ],
         "voice": "The voice of the brand is that of a Solana Degen."
     },
+    "openai": {
+        "api_key": app_config.OPENAI_API_KEY,
+    },
     "mongo": {
         "connection_string": app_config.MONGO_URL,
         "database": app_config.MONGO_DB,
-    },
-    "openai": {
-        "api_key": app_config.OPENAI_API_KEY,
     },
     "zep": {
         "api_key": app_config.ZEP_API_KEY,
