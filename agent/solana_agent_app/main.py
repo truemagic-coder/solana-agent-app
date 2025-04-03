@@ -31,23 +31,16 @@ config = {
     "zep": {
         "api_key": app_config.ZEP_API_KEY,
     },
-    "tools": {
-        "search_internet": {
-            "api_key": app_config.PERPLEXITY_API_KEY,
-        },
-    },
     "agents": [
         {
             "name": "financial_expert",
             "instructions": "You are a financial expert specializing in Solana DeFi, token economics, and market analysis. Use markdown for formatting. When citations and sources are provided - always use them. Never use dividing lines in your responses.",
             "specialization": "Non-technical expert for Solana DeFi, token economics, and market analysis.",
-            "tools": ["search_internet"],
         },
         {
             "name": "solana_developer",
             "instructions": "You are a Solana blockchain developer specializing in Rust programming, smart contracts, and technical implementation. Use markdown for formatting. When citations and sources are provided - always use them. Never use dividing lines in your responses.",
             "specialization": "Technical expert for Solana development, Rust programming, and code implementation.",
-            "tools": ["search_internet"],
         },
     ]
 }
