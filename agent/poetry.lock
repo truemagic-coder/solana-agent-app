@@ -852,14 +852,14 @@ files = [
 
 [[package]]
 name = "solana-agent"
-version = "21.1.0"
+version = "22.0.6"
 description = "Agentic IQ"
 optional = false
 python-versions = "<4.0,>=3.12"
 groups = ["main"]
 files = [
-    {file = "solana_agent-21.1.0-py3-none-any.whl", hash = "sha256:79b0c8b976603bfa7d8113023dfbae0a022edf562885c0f8d39b13b717aee436"},
-    {file = "solana_agent-21.1.0.tar.gz", hash = "sha256:9923f9d7ce3054933eb7c7f98c4abd7243985442ea5c3f5f0790018a6aff1829"},
+    {file = "solana_agent-22.0.6-py3-none-any.whl", hash = "sha256:bda50e9f508fd572aa1efd9c2a8e7c56df392be358d3e28161af8588aaa8a984"},
+    {file = "solana_agent-22.0.6.tar.gz", hash = "sha256:0177a608f2071fa36f54c777ce04da013ab9aad2c5b84a243f8d40f0d377ff30"},
 ]
 
 [package.dependencies]
@@ -867,7 +867,6 @@ openai = ">=1.70.0,<2.0.0"
 pydantic = ">=2.11.2,<3.0.0"
 pymongo = ">=4.11.3,<5.0.0"
 zep-cloud = ">=2.9.0,<3.0.0"
-zep-python = ">=2.0.2,<3.0.0"
 
 [[package]]
 name = "starlette"
@@ -1213,24 +1212,7 @@ httpx = ">=0.21.2"
 pydantic = ">=1.9.2"
 typing_extensions = ">=4.0.0"
 
-[[package]]
-name = "zep-python"
-version = "2.0.2"
-description = ""
-optional = false
-python-versions = "<4.0,>=3.8"
-groups = ["main"]
-files = [
-    {file = "zep_python-2.0.2-py3-none-any.whl", hash = "sha256:d7b2cadf1eb15007825362cae5ddff9c9d0ada5b4f75cf91e5b87986459f7817"},
-    {file = "zep_python-2.0.2.tar.gz", hash = "sha256:919fd635ad5801f30d9ef6da0bb99e854ed4c3cd1357dc8ada4a39b8171a41bc"},
-]
-
-[package.dependencies]
-httpx = ">=0.21.2"
-pydantic = ">=1.9.2"
-typing_extensions = ">=4.0.0"
-
 [metadata]
 lock-version = "2.1"
 python-versions = "3.13.2"
-content-hash = "5a6a9ab39e1d0fc7b6e2b8ab63d6792fb5b91c267ea2dd636751891e575f33ee"
+content-hash = "5335363188e1663e8e9e148186f051e5055141ace87bd396afd7cc70ab332dd3"
