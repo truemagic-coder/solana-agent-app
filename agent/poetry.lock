@@ -367,6 +367,18 @@ socks = ["socksio (==1.*)"]
 zstd = ["zstandard (>=0.18.0)"]
 
 [[package]]
+name = "httpx-sse"
+version = "0.4.0"
+description = "Consume Server-Sent Event (SSE) messages with HTTPX."
+optional = false
+python-versions = ">=3.8"
+groups = ["main"]
+files = [
+    {file = "httpx-sse-0.4.0.tar.gz", hash = "sha256:1e81a3a3070ce322add1d3529ed42eb5f70817f45ed6ec915ab753f961139721"},
+    {file = "httpx_sse-0.4.0-py3-none-any.whl", hash = "sha256:f329af6eae57eaa2bdfd962b42524764af68075ea87370a2de920af5341e318f"},
+]
+
+[[package]]
 name = "idna"
 version = "3.10"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -466,6 +478,33 @@ files = [
     {file = "jiter-0.9.0-cp39-cp39-win_amd64.whl", hash = "sha256:e8b36d8a16a61993be33e75126ad3d8aa29cf450b09576f3c427d27647fcb4aa"},
     {file = "jiter-0.9.0.tar.gz", hash = "sha256:aadba0964deb424daa24492abc3d229c60c4a31bfee205aedbf1acc7639d7893"},
 ]
+
+[[package]]
+name = "mcp"
+version = "1.6.0"
+description = "Model Context Protocol SDK"
+optional = false
+python-versions = ">=3.10"
+groups = ["main"]
+files = [
+    {file = "mcp-1.6.0-py3-none-any.whl", hash = "sha256:7bd24c6ea042dbec44c754f100984d186620d8b841ec30f1b19eda9b93a634d0"},
+    {file = "mcp-1.6.0.tar.gz", hash = "sha256:d9324876de2c5637369f43161cd71eebfd803df5a95e46225cab8d280e366723"},
+]
+
+[package.dependencies]
+anyio = ">=4.5"
+httpx = ">=0.27"
+httpx-sse = ">=0.4"
+pydantic = ">=2.7.2,<3.0.0"
+pydantic-settings = ">=2.5.2"
+sse-starlette = ">=1.6.1"
+starlette = ">=0.27"
+uvicorn = ">=0.23.1"
+
+[package.extras]
+cli = ["python-dotenv (>=1.0.0)", "typer (>=0.12.4)"]
+rich = ["rich (>=13.9.4)"]
+ws = ["websockets (>=15.0.1)"]
 
 [[package]]
 name = "openai"
@@ -639,6 +678,27 @@ files = [
 
 [package.dependencies]
 typing-extensions = ">=4.6.0,<4.7.0 || >4.7.0"
+
+[[package]]
+name = "pydantic-settings"
+version = "2.8.1"
+description = "Settings management using Pydantic"
+optional = false
+python-versions = ">=3.8"
+groups = ["main"]
+files = [
+    {file = "pydantic_settings-2.8.1-py3-none-any.whl", hash = "sha256:81942d5ac3d905f7f3ee1a70df5dfb62d5569c12f51a5a647defc1c3d9ee2e9c"},
+    {file = "pydantic_settings-2.8.1.tar.gz", hash = "sha256:d5c663dfbe9db9d5e1c646b2e161da12f0d734d422ee56f567d0ea2cee4e8585"},
+]
+
+[package.dependencies]
+pydantic = ">=2.7.0"
+python-dotenv = ">=0.21.0"
+
+[package.extras]
+azure-key-vault = ["azure-identity (>=1.16.0)", "azure-keyvault-secrets (>=4.8.0)"]
+toml = ["tomli (>=2.0.1)"]
+yaml = ["pyyaml (>=6.0.1)"]
 
 [[package]]
 name = "pyjwt"
@@ -839,6 +899,23 @@ socks = ["PySocks (>=1.5.6,!=1.5.7)"]
 use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
+name = "sakit"
+version = "6.1.2"
+description = "Solana Agent Kit"
+optional = false
+python-versions = "<4.0,>=3.12"
+groups = ["main"]
+files = [
+    {file = "sakit-6.1.2-py3-none-any.whl", hash = "sha256:8cf3e2f84d93e937ea003e0fef5004fd7982551da1c41ee6ab35fcfa893593c0"},
+    {file = "sakit-6.1.2.tar.gz", hash = "sha256:aaf12952b510d24b347e3529120c1ffc947938d4899612e475f21407c5c47b8b"},
+]
+
+[package.dependencies]
+httpx = ">=0.28.1,<0.29.0"
+mcp = ">=1.6.0,<2.0.0"
+solana-agent = ">=22"
+
+[[package]]
 name = "sniffio"
 version = "1.3.1"
 description = "Sniff out which async library your code is running under"
@@ -852,14 +929,14 @@ files = [
 
 [[package]]
 name = "solana-agent"
-version = "22.0.6"
+version = "23.0.0"
 description = "Agentic IQ"
 optional = false
 python-versions = "<4.0,>=3.12"
 groups = ["main"]
 files = [
-    {file = "solana_agent-22.0.6-py3-none-any.whl", hash = "sha256:bda50e9f508fd572aa1efd9c2a8e7c56df392be358d3e28161af8588aaa8a984"},
-    {file = "solana_agent-22.0.6.tar.gz", hash = "sha256:0177a608f2071fa36f54c777ce04da013ab9aad2c5b84a243f8d40f0d377ff30"},
+    {file = "solana_agent-23.0.0-py3-none-any.whl", hash = "sha256:1ce9de3d2c9be51db18966cac4fee3858351d28578b8481e35ae3fb33a8c73e6"},
+    {file = "solana_agent-23.0.0.tar.gz", hash = "sha256:1adc52d9989e6f8764618181d14f8d03fd0e053f3e24ccb4b706ff80689f38c7"},
 ]
 
 [package.dependencies]
@@ -867,6 +944,26 @@ openai = ">=1.70.0,<2.0.0"
 pydantic = ">=2.11.2,<3.0.0"
 pymongo = ">=4.11.3,<5.0.0"
 zep-cloud = ">=2.9.0,<3.0.0"
+
+[[package]]
+name = "sse-starlette"
+version = "2.2.1"
+description = "SSE plugin for Starlette"
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+files = [
+    {file = "sse_starlette-2.2.1-py3-none-any.whl", hash = "sha256:6410a3d3ba0c89e7675d4c273a301d64649c03a5ef1ca101f10b47f895fd0e99"},
+    {file = "sse_starlette-2.2.1.tar.gz", hash = "sha256:54470d5f19274aeed6b2d473430b08b4b379ea851d953b11d7f1c4a2c118b419"},
+]
+
+[package.dependencies]
+anyio = ">=4.7.0"
+starlette = ">=0.41.3"
+
+[package.extras]
+examples = ["fastapi"]
+uvicorn = ["uvicorn (>=0.34.0)"]
 
 [[package]]
 name = "starlette"
@@ -1215,4 +1312,4 @@ typing_extensions = ">=4.0.0"
 [metadata]
 lock-version = "2.1"
 python-versions = "3.13.2"
-content-hash = "5335363188e1663e8e9e148186f051e5055141ace87bd396afd7cc70ab332dd3"
+content-hash = "41d4129f9da026370aa82855878589198f7042e57988e190a391a3848321adff"
