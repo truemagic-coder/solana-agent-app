@@ -34,7 +34,6 @@ config = {
     "tools": {
         "search_internet": {
             "api_key": app_config.OPENAI_API_KEY,
-            "provider": "openai",
         },
     },
     "agents": [
