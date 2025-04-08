@@ -13,5 +13,6 @@ class Config:
     ZEP_API_KEY = os.getenv("ZEP_API_KEY")
     RPC_URL = os.getenv("RPC_URL")
     PERPLEXITY_API_KEY = os.getenv("PERPLEXITY_API_KEY")
+    GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 config = Config()
