@@ -24,9 +24,6 @@ config = {
     "openai": {
         "api_key": app_config.OPENAI_API_KEY,
     },
-    "gemini": {
-        "api_key": app_config.GEMINI_API_KEY,
-    },
     "mongo": {
         "connection_string": app_config.MONGO_URL,
         "database": app_config.MONGO_DB,

@@ -17,7 +17,6 @@
 * `docker-compose up -d`
 * Rename `.env.sample` to `.env` in `site` and `agent`
 * Get and set the OPENAI_API_KEY var in the `agent` folder for `.env` file - [OpenAI API Key](https://platform.openai.com/api-keys)
-* Get and set the GEMINI_API_KEY var in the `agent` folder for `.env` file - [Gemini API Key](https://aistudio.google.com/apikey)
 * Get and set the ZEP_API_KEY in the `agent` folder for `.env` file - [Zep](https://getzep.com)
 * Get and set the RPC_URL in the `agent` folder for the `.env` file - [Helius](https://helius.dev)
 * Set all the secrets to match between the `.env` files and make them `uuidv4`s or other strong keys - [UUID Generator](https://www.uuidgenerator.net)
