@@ -12,5 +12,6 @@ class Config:
     MONGO_DB = os.getenv("MONGO_DB")
     ZEP_API_KEY = os.getenv("ZEP_API_KEY")
     RPC_URL = os.getenv("RPC_URL")
+    PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
 
 config = Config()
