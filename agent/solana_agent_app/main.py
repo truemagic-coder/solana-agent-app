@@ -31,12 +31,6 @@ config = {
     "zep": {
         "api_key": app_config.ZEP_API_KEY,
     },
-    "gemini": {
-        "api_key": app_config.GEMINI_API_KEY,
-    },
-    "grok": {
-        "api_key": app_config.GROK_API_KEY,
-    },
     "tools": {
         "search_internet": {
             "api_key": app_config.OPENAI_API_KEY,
