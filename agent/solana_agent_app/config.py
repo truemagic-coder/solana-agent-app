@@ -13,5 +13,6 @@ class Config:
     ZEP_API_KEY = os.getenv("ZEP_API_KEY")
     RPC_URL = os.getenv("RPC_URL")
     PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
+    PRIVATE_KEY = os.getenv("PRIVATE_KEY")
 
 config = Config()

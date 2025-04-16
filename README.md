@@ -20,6 +20,7 @@
 * Get and set the PINECONE_API_KEY var in the `agent` folder for `.env` file - [Pinecone](https://pinecone.io)
 * Get and set the ZEP_API_KEY in the `agent` folder for `.env` file - [Zep](https://getzep.com)
 * Get and set the RPC_URL in the `agent` folder for the `.env` file - [Helius](https://helius.dev)
+* Get and set the PRIVATE_KEY in the `agent` folder for the `.env` file - your bs58 encoded private key for a burner Solana wallet
 * Set all the secrets to match between the `.env` files and make them `uuidv4`s or other strong keys - [UUID Generator](https://www.uuidgenerator.net)
 * Open two terminal windows
 * `Terminal 1`: `cd site && yarn install && yarn dev`
