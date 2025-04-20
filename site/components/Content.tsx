@@ -125,6 +125,7 @@ function External() {
   const [connectionError, setConnectionError] = useState<string | null>(null);
   const [isLoadingOldMessages, setIsLoadingOldMessages] = useState(false);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null); // Track current user
 
   const {
     chatHistory,
@@ -135,6 +136,7 @@ function External() {
     allDataFetched,
     initialFetchDone,
     currentPage,
+    resetChat,
   } = useChatStore();
 
   const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -188,6 +190,16 @@ function External() {
       setIsLoadingOldMessages(false);
     }
   };
+
+  useEffect(() => {
+    const newUserId = publicKey?.toBase58() || null;
+    // Check if the user ID has actually changed from the tracked one
+    if (newUserId !== currentUserId) {
+      console.log('User changed. Resetting chat history. New User ID:', newUserId);
+      resetChat(); // Reset the store
+      setCurrentUserId(newUserId); // Update the tracked user ID
+    }
+  }, [publicKey, resetChat, currentUserId]); // Add currentUserId to dependencies
 
   // Handle WebSocket connection
   useEffect(() => {
@@ -305,10 +317,14 @@ function External() {
   }, [isStreaming]);
 
   useEffect(() => {
-    if (publicKey && chatHistory.data.length === 0 && session && !fetchLoading && !initialFetchDone) {
-      fetchData(publicKey.toBase58(), session.user?.name as string, 1);
+    const userId = publicKey?.toBase58();
+    // Only fetch if the userId matches the *current* tracked user ID and other conditions are met
+    if (userId && userId === currentUserId && chatHistory.data.length === 0 && session?.user?.name && status === 'authenticated' && !fetchLoading && !initialFetchDone) {
+      console.log('Fetching initial data for user:', userId);
+      fetchData(userId, session.user.name as string, 1);
     }
-  }, [publicKey, session, chatHistory.data.length, fetchLoading, initialFetchDone]);
+    // Ensure dependencies cover all conditions for fetching
+  }, [publicKey, session, status, chatHistory.data.length, fetchLoading, initialFetchDone, fetchData, currentUserId, resetChat]); // Add currentUserId and resetChat
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);

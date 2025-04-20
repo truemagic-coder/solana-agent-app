@@ -46,7 +46,16 @@ interface ChatStore {
   setInitialFetchDone: (done: boolean) => void;
   loadingPages: Record<number, boolean>;
   updateMessage: (id: string, updatedMessage: Partial<ChatMessage>) => void;
+  resetChat: () => void;
 }
+
+const initialChatHistory: ChatHistory = { // Define initial state for easy reset
+  data: [],
+  total: 0,
+  page: 0,
+  page_size: 20,
+  total_pages: 0,
+};
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
@@ -55,6 +64,15 @@ export const useChatStore = create<ChatStore>()(
     chatHistory: {
       data: [], total: 0, page: 1, page_size: 0, total_pages: 1,
     },
+    resetChat: () => set({ // Implement the reset function
+      chatHistory: initialChatHistory,
+      allDataFetched: false,
+      fetchLoading: false,
+      fetchError: false,
+      currentPage: 1,
+      initialFetchDone: false,
+      agentVerified: false,
+    }),
     allDataFetched: false,
     fetchLoading: false,
     fetchError: false,

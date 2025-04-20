@@ -201,7 +201,7 @@ async def websocket_chat(websocket: WebSocket):
         return  # Connection already closed by verify_token
     
     # Extract user ID from token
-    user_id = token_data.get("user_id") or token_data.get("sub")
+    user_id = token_data.get("sub")
     if not user_id:
         await websocket.close(code=status.WS_1008_POLICY_VIOLATION, reason="User ID missing from token")
         return
