@@ -8,11 +8,11 @@ packages = [{include = "solana_agent_app"}]
 [tool.poetry.dependencies]
 python = "3.13.2"
 fastapi = "^0.115.12"
-uvicorn = {version = "^0.34.1", extras = ["standard"]}
+uvicorn = {version = "^0.34.2", extras = ["standard"]}
 gunicorn = "^23.0.0"
 python-dotenv = ">=1"
-solana-agent = "^27.3.2"
-sakit = "^8.0.0"
+solana-agent = "^27.3.6"
+sakit = "^8.1.2"
 pyjwt = "^2.10.1"
 requests = "^2.32.3"
 httpx = "^0.28.1"

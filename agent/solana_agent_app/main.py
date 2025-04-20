@@ -1,6 +1,6 @@
 import json
 from typing import Any, Dict, List
-from fastapi import FastAPI, Header, Request, WebSocket, WebSocketDisconnect, Depends, HTTPException, status, File, UploadFile
+from fastapi import FastAPI, Header, Request, WebSocket, WebSocketDisconnect, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 import logging
 from pydantic import BaseModel
@@ -10,17 +10,6 @@ import httpx
 from solana_agent import SolanaAgent
 
 config = {
-    "business": {
-        "mission": "To provide users with a one-stop shop for Solana development.",
-        "values": {
-            "Friendliness": "Users must be treated fairly, openly, and with friendliness.",
-            "Ethical": "Agents must use a strong ethical framework in their interactions with users.",
-        },
-        "goals": [
-            "Empower users with great answers to their queries.",
-        ],
-        "voice": "The voice of the brand is that of a Solana Degen."
-    },
     "openai": {
         "api_key": app_config.OPENAI_API_KEY,
     },
@@ -30,12 +19,6 @@ config = {
     },
     "zep": {
         "api_key": app_config.ZEP_API_KEY,
-    },
-    "knowledge_base": {
-        "pinecone": {
-            "api_key": app_config.PINECONE_API_KEY,
-            "index_name": "kb",
-        },
     },
     "tools": {
         "search_internet": {
@@ -57,12 +40,6 @@ config = {
             """,
             "specialization": "Non-technical expert for Solana DeFi, token economics, and market analysis.",
             "tools": ["search_internet", "solana"],
-        },
-        {
-            "name": "solana_developer",
-            "instructions": "You are a Solana blockchain developer specializing in Rust programming, smart contracts, and technical implementation. When citations and sources are provided - always use them.",
-            "specialization": "Technical expert for Solana development, Rust programming, and code implementation.",
-            "tools": ["search_internet"],
         },
     ]
 }
@@ -108,31 +85,6 @@ app.add_middleware(
     allow_methods=["POST", "GET", "PUT", "DELETE"],
     allow_headers=["*"],
 )
-
-@app.post("/upload_pdf_file")
-async def conversation_endpoint(pdf_file: UploadFile = File(...)):
-    pdf_bytes = await pdf_file.read()
-
-    pdf_metadata = {
-        "source": pdf_file.filename,
-    }
-
-    await solana_agent.kb_add_pdf_document(
-        pdf_data=pdf_bytes,
-        metadata=pdf_metadata,
-    )
-
-    return {"message": "PDF file processed successfully"}
-    
-@app.post("/create_kb_text")
-async def upload_kb_text_endpoint():
-    doc_text = "Solana Agent is a Python framework for building multi-agent AI systems."
-    doc_metadata = {
-        "source": "internal_docs",
-        "version": "1.0",
-        "tags": ["framework", "python", "ai"]
-    }
-    await solana_agent.kb_add_document(text=doc_text, metadata=doc_metadata)
 
 @app.post("/rpc")
 async def handler_rpc_post(request: Request):
