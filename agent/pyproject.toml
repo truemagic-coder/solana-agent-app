@@ -11,8 +11,8 @@ fastapi = "^0.115.12"
 uvicorn = {version = "^0.34.2", extras = ["standard"]}
 gunicorn = "^23.0.0"
 python-dotenv = ">=1"
-solana-agent = "^28.0.0"
-sakit = "^8.1.2"
+solana-agent = "^29.1.3"
+sakit = { path = "../../solana-agent-kit", develop = true }
 pyjwt = "^2.10.1"
 requests = "^2.32.3"
 httpx = "^0.28.1"

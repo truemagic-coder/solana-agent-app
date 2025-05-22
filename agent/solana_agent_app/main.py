@@ -20,26 +20,23 @@ config = {
     "zep": {
         "api_key": app_config.ZEP_API_KEY,
     },
+    "grok": {
+        "api_key": app_config.GROK_API_KEY,
+    },
     "tools": {
         "search_internet": {
-            "api_key": app_config.OPENAI_API_KEY,
-        },
-        "solana": {
-            "private_key": app_config.PRIVATE_KEY,
-            "rpc_url": app_config.RPC_URL,
-            "helius_rpc_url": app_config.RPC_URL,
+            "api_key": app_config.GROK_API_KEY,
+            "provider": "grok",
         },
     },
     "agents": [
         {
-            "name": "financial_expert",
-            "instructions": """
-                You are a financial expert specializing in Solana DeFi, token economics, and market analysis. 
-                When citations and sources are provided - always use them.
-                You always use the Solana tool to perform actions on the Solana blockchain.
+            "name": "news_agent",
+            "instructions": """                
+                You are a news agent. Your job is to provide the latest news articles based on the user's query.
             """,
-            "specialization": "Non-technical expert for Solana DeFi, token economics, and market analysis.",
-            "tools": ["search_internet", "solana"],
+            "specialization": "News",
+            "tools": ["search_internet"],
         },
     ]
 }

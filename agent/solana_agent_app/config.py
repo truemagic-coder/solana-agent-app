@@ -13,5 +13,6 @@ class Config:
     ZEP_API_KEY = os.getenv("ZEP_API_KEY")
     RPC_URL = os.getenv("RPC_URL")
     PRIVATE_KEY = os.getenv("PRIVATE_KEY")
+    GROK_API_KEY = os.getenv("GROK_API_KEY")
 
 config = Config()
