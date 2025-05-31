@@ -13,7 +13,6 @@ class Config:
     ZEP_API_KEY = os.getenv("ZEP_API_KEY")
     RPC_URL = os.getenv("RPC_URL")
     PRIVATE_KEY = os.getenv("PRIVATE_KEY")
-    ZAPIER_URL = os.getenv("ZAPIER_URL")
     ALPHAVYBE_API_KEY = os.getenv("ALPHAVYBE_API_KEY")
     BIRDEYE_API_KEY = os.getenv("BIRDEYE_API_KEY")
 
