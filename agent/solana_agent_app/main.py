@@ -20,23 +20,30 @@ config = {
     "zep": {
         "api_key": app_config.ZEP_API_KEY,
     },
-    "grok": {
-        "api_key": app_config.GROK_API_KEY,
-    },
     "tools": {
-        "search_internet": {
-            "api_key": app_config.GROK_API_KEY,
-            "provider": "grok",
+        "solana_transfer": {
+            "rpc_url": app_config.RPC_URL,
+            "private_key": app_config.PRIVATE_KEY,
+        },
+        "solana_swap": {
+            "rpc_url": app_config.RPC_URL,
+            "private_key": app_config.PRIVATE_KEY,
+        },
+        "solana_balance": {
+            "api_key": app_config.ALPHAVYBE_API_KEY,
+        },
+        "solana_price": {
+            "api_key": app_config.BIRDEYE_API_KEY,
         },
     },
     "agents": [
         {
-            "name": "news_agent",
+            "name": "solana_agent",
             "instructions": """                
-                You are a news agent. Your job is to provide the latest news articles based on the user's query.
+                You are a Solana expert agent that can transfer SOL and SPL tokens between accounts, swap tokens, rugcheck, get prices, and check balances.
             """,
-            "specialization": "News",
-            "tools": ["search_internet"],
+            "specialization": "Solana Expert",
+            "tools": ["solana_transfer", "solana_swap", "rugcheck", "solana_balance", "solana_price"],
         },
     ]
 }
@@ -215,9 +222,7 @@ async def websocket_chat(websocket: WebSocket):
                 message_data = json.loads(data)
                 user_message = message_data.get("message", "")
                 
-                # Store the complete response to save in database
                 full_response = ""
-                
                 # Process the message with your swarm
                 async for chunk in solana_agent.process(user_id, user_message):
                     # Accumulate the full response
