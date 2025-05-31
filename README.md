@@ -19,6 +19,8 @@
 * Get and set the OPENAI_API_KEY var in the `agent` folder for `.env` file - [OpenAI API Key](https://platform.openai.com/api-keys)
 * Get and set the ZEP_API_KEY in the `agent` folder for `.env` file - [Zep](https://getzep.com)
 * Get and set the RPC_URL in the `agent` folder for the `.env` file - [Helius](https://helius.dev)
+* Get and set the ALPHAVYBE_API_KEY in the `agent` folder for the `.env` file - [AlphaVybe](https://docs.vybenetwork.com/docs/getting-started)
+* Get and set the BIRDEYE_API_KEY in the `agent` folder in the `.env` file - [Birdeye](https://bds.birdeye.so)
 * Get and set the PRIVATE_KEY in the `agent` folder for the `.env` file - your bs58 encoded private key for a burner Solana wallet
 * Set all the secrets to match between the `.env` files and make them `uuidv4`s or other strong keys - [UUID Generator](https://www.uuidgenerator.net)
 * Open two terminal windows
