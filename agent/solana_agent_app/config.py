@@ -15,5 +15,6 @@ class Config:
     PRIVATE_KEY = os.getenv("PRIVATE_KEY")
     ALPHAVYBE_API_KEY = os.getenv("ALPHAVYBE_API_KEY")
     BIRDEYE_API_KEY = os.getenv("BIRDEYE_API_KEY")
+    ZAPIER_URL = os.getenv("ZAPIER_URL")
 
 config = Config()

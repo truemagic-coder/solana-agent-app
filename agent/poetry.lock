@@ -3245,14 +3245,14 @@ websockets = ">=9.0,<=15.0"
 
 [[package]]
 name = "solana-agent"
-version = "30.0.0"
+version = "30.0.1"
 description = "AI Agents for Solana"
 optional = false
 python-versions = "<4.0,>=3.12"
 groups = ["main"]
 files = [
-    {file = "solana_agent-30.0.0-py3-none-any.whl", hash = "sha256:7f620a05d21c2307e7882cf8a081f50ddb2d7c92ce2ea80530b54aff369ac628"},
-    {file = "solana_agent-30.0.0.tar.gz", hash = "sha256:6ba1fc71a9fca20ff62aba6ec037ba31bdc6a0d2cb238b9f13a92866889e28e9"},
+    {file = "solana_agent-30.0.1-py3-none-any.whl", hash = "sha256:968a9b7da3a46504416fbb4082fa4df4d279ae250ff8ec03c97f26e39788d620"},
+    {file = "solana_agent-30.0.1.tar.gz", hash = "sha256:58472fd2784443bd1b204a881b92e12740b4659a4126439df5fa6bf535ad011f"},
 ]
 
 [package.dependencies]
@@ -4141,4 +4141,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.1"
 python-versions = "3.13.2"
-content-hash = "338cf4ebf152c3b35ca26d9cb6635f7cee851834d3cecd1ce5a4c92bb226b0d3"
+content-hash = "5d8ee32cbe617e451216fc7673fe5c25214a81a5731b3bc22bf142b285a25159"
