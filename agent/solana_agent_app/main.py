@@ -35,19 +35,15 @@ config = {
         "solana_price": {
             "api_key": app_config.BIRDEYE_API_KEY,
         },
-        "mcp": {
-            "url": app_config.ZAPIER_URL,
-        },
     },
     "agents": [
         {
             "name": "solana_agent",
             "instructions": """                
                 You are a Solana expert agent that can transfer SOL and SPL tokens between accounts, swap tokens, rugcheck, get prices, and check balances.
-                You use your mcp tools to perform Zapier actions - like sending emails.
             """,
             "specialization": "Solana Expert",
-            "tools": ["solana_transfer", "solana_swap", "rugcheck", "solana_balance", "solana_price", "mcp"],
+            "tools": ["solana_transfer", "solana_swap", "rugcheck", "solana_balance", "solana_price"],
         },
     ]
 }
